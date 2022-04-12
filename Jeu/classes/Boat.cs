@@ -4,17 +4,20 @@
     {
         String Name;
         String Type;
-        Dictionary<String, bool> Positions;
+        Dictionary<Position, bool> Positions;
         bool Alive;
 
         public Boat(string name, string type, string[] positions)
         {
             Name = name;
             Type = type;
-            Positions = new Dictionary<String, bool>();
-            foreach (string position in positions)
+            Positions = new ();
+            Position newPosition;
+
+            foreach (string pos in positions)
             {
-                Positions.Add(position, false);
+                newPosition = Position.createFromString(pos);
+                Positions.Add(newPosition, false);
             }
             Alive = true;
         }

@@ -9,19 +9,9 @@
             boats = new List<Boat>();
         }
 
-        public bool AddBoat()
+        public void AddBoat(Boat newBoat)
         {
-            Boat tmp = new Boat("Requin", "Torpilleur", new string[] { "A1", "A2" });
-            boats.Add(tmp);
-            tmp = new Boat("Espadon", "Torpilleur", new string[] { "D1", "D2" });
-            boats.Add(tmp);
-            tmp = new Boat("Baline", "Croiseur", new string[] { "E1", "F1", "G1" });
-            boats.Add(tmp);
-            tmp = new Boat("Orque", "Croiseur", new string[] { "G1", "G2", "G3" });
-            boats.Add(tmp);
-            tmp = new Boat("Kraken", "Vaisseu-mère", new string[] { "J6", "J7", "J8", "J9" });
-            boats.Add(tmp);
-            return true;
+            boats.Add(newBoat);
         }
     }
 }
