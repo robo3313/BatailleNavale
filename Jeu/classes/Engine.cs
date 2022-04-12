@@ -18,6 +18,7 @@
 
         public bool positionBoat(string name, string type, string[] positions)
         {
+            Console.WriteLine("Placez vos navires avant la bataille:");
             Console.WriteLine("Tentative de positionnement d'un bateau {0}", name);
             try
             {
