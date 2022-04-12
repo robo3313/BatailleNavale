@@ -2,7 +2,7 @@
 {
     class Fleet
     {
-        List<Boat> boats;
+        public List<Boat> boats;
 
         public Fleet()
         {
@@ -19,7 +19,7 @@
             boats.Add(tmp);
             tmp = new Boat("Orque", "Croiseur", new string[] { "G1", "G2", "G3" });
             boats.Add(tmp);
-            tmp = new Boat("Kraken", "Vaisseu-mère", new string[] { "J6", "J7", "J8", "J9" });
+            tmp = new Boat("Kraken", "Vaisseau-mère", new string[] { "J6", "J7", "J8", "J9" });
             boats.Add(tmp);
             return true;
         }
