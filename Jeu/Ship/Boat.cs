@@ -1,12 +1,22 @@
 ﻿namespace Jeu
 {
-    class Boat
+    /// <summary>
+    /// classe Boat
+    /// </summary>
+    public class Boat
     {
-        String Name;
-        String Type;
-        Dictionary<Position, bool> Positions;
-        bool Alive;
-        
+        public string Name;
+        public string Type;
+        public Dictionary<Position, bool> Positions;
+        public bool Alive = false;
+
+        /// <summary>
+        /// constructeur de la classe Boat
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="positions"></param>
+
         public Boat(string name, string type, string[] positions)
         {
             Name = name;
