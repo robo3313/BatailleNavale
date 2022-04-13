@@ -2,8 +2,8 @@
 {
     class Position
     {
-        char Column { get; set; }
-        int Row { get; set; }
+        public char Column { get; set; }
+        public int Row { get; set; }
 
         public Position(char column, int number)
         {
@@ -14,34 +14,23 @@
         // Traitement des coordonnées & cas d'erreurs
         public static Position createFromString(string columnRow)
         {
-            Console.WriteLine("columnRow = {0}", columnRow);
-            char letter = Char.ToUpper(columnRow[0]);
             int number;
-            if (Int32.TryParse(columnRow[1].ToString(), out number) == false)
+            string str = columnRow.Substring(1);
+            if (!Int32.TryParse(str, out number))
             {
-
-                throw new Exception("Impossible de placer un bateau en " + columnRow);
+                throw new Exception("Impossible d'utiliser la coordonnée "+ str);
             }
+            return new Position(columnRow[0], number);
+        }
 
-            Int32.TryParse(columnRow[1].ToString(), out number);
-
-
-            if (letter < 'A' && letter > 'J' && number <= 0 && number > 9 || (columnRow.Length == 3 && columnRow[2] != 0))
-
+        public static Position[] createFromStringArray(string[] coordinates)
+        {
+            Position[] result = new Position[coordinates.Length];
+            for (int i = 0; i < coordinates.Length; i++)
             {
-                throw new Exception("Impossible de placer un bateau en " + columnRow);
+                result[i] = createFromString(coordinates[i]);
             }
-            else if (columnRow[1] == 1 && columnRow[2] == '0')
-            {
-                int numbers = 10;
-                Position res = new Position(columnRow[0], numbers);
-                return res;
-            }
-            else
-            {
-                Position res = new Position(columnRow[0], number);
-                return res;
-            }
+            return result;
         }
 
         public override string ToString()
