@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeu", "Jeu\Jeu.csproj", "{F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientTCP", "ClientTCP\ClientTCP.csproj", "{78074A2E-208C-4E4E-9AD5-AC758845914C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{66CE05AD-FD33-4765-8B1A-84974A0BF83A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{CA2F9742-691D-4FB7-BCB6-950CAFABC5D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{78074A2E-208C-4E4E-9AD5-AC758845914C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78074A2E-208C-4E4E-9AD5-AC758845914C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78074A2E-208C-4E4E-9AD5-AC758845914C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66CE05AD-FD33-4765-8B1A-84974A0BF83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66CE05AD-FD33-4765-8B1A-84974A0BF83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66CE05AD-FD33-4765-8B1A-84974A0BF83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66CE05AD-FD33-4765-8B1A-84974A0BF83A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA2F9742-691D-4FB7-BCB6-950CAFABC5D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA2F9742-691D-4FB7-BCB6-950CAFABC5D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA2F9742-691D-4FB7-BCB6-950CAFABC5D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA2F9742-691D-4FB7-BCB6-950CAFABC5D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
