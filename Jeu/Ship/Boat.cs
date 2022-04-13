@@ -38,8 +38,13 @@
            Console.WriteLine("Mon type est : {0}", Type);
            foreach(KeyValuePair<Position, bool> pair in Positions)
             {
-                Console.WriteLine("Ma position est : {0}  {1}", pair.Key, pair.Value);
+                Console.WriteLine("Ma position est : {0}  {1}", pair.Key.Column, pair.Key.Row);
             }
+        }
+        public override string ToString()
+        {
+            string res = Name + Type + Positions;
+            return res;
         }
 
     }

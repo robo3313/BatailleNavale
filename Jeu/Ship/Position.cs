@@ -2,8 +2,8 @@
 {
     class Position
     {
-        char Column { get; set; }
-        int Row { get; set; }
+        public char Column { get; set; }
+        public int Row { get; set; }
 
         public Position(char column, int number)
         {
@@ -14,7 +14,6 @@
         // Traitement des coordonnées & cas d'erreurs
         public static Position createFromString(string columnRow)
         {
-            Console.WriteLine("columnRow = {0}", columnRow);
             char letter = Char.ToUpper(columnRow[0]);
             int number;
             if (Int32.TryParse(columnRow[1].ToString(), out number) == false)
