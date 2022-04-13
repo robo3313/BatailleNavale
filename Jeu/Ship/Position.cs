@@ -17,7 +17,7 @@
             Console.WriteLine("columnRow = {0}", columnRow);
             char letter = Char.ToUpper(columnRow[0]);
             int number;
-            if (Int32.TryParse(columnRow[1].ToString(), out number); == false 
+            if (Int32.TryParse(columnRow[1].ToString(), out number) == false)
             {
 
                 throw new Exception("Impossible de placer un bateau en " + columnRow);
