@@ -39,10 +39,16 @@
             }
             else
             {
-                Position res = new Position(columnRow[0], columnRow[1]);
+                Position res = new Position(columnRow[0], number);
                 return res;
             }
-        } 
+        }
+
+        public override string ToString()
+        {
+            return Column.ToString() + Row.ToString();
+        }
+
     }
 }
  

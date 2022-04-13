@@ -18,8 +18,18 @@ namespace  Jeu
         {
             Game myGame = new();
             myGame.Start();
+
+            /*Fleet fleet1 = new Fleet();
+
+            Boat b = new("Willy", "Orque", new string[] { "A1", "A2", "A3" });
+
+            b.WriteInfo();*/
+
         }
     }
+
+
+
 
 }
 

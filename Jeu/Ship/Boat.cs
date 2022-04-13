@@ -26,7 +26,7 @@
         {
            Console.WriteLine("Mon nom est :{0}", Name);
            Console.WriteLine("Mon type est : {0}", Type);
-           foreach(KeyValuePair<String, bool> pair in Positions)
+           foreach(KeyValuePair<Position, bool> pair in Positions)
             {
                 Console.WriteLine("Ma position est : {0}  {1}", pair.Key, pair.Value);
             }
