@@ -43,6 +43,7 @@ class MyTcpListener
                 NetworkStream stream = client.GetStream();
 
                 int i;
+                int n=0;
 
                 // Loop to receive all the data sent by the client.
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
@@ -60,16 +61,18 @@ class MyTcpListener
                     // Send back a response.
                     stream.Write(msg, 0, msg.Length);
                     Console.WriteLine("Sent: {0}", data);
+                    n++;
+                    // Send a missile.
 
-                  
-
+                    Console.WriteLine("Entrer une postition à attaquer");
+                    string missile = Console.ReadLine()!;
+                    byte[] msg2 = System.Text.Encoding.ASCII.GetBytes(missile!);
+                    stream.Write(msg2, 0, msg2.Length);
+                    Console.WriteLine("Sent: {0}", missile);
+                    
+                    break;
                 }
-                // Send a missile.
-
-                string missile = "5H";
-                byte[] msg2 = System.Text.Encoding.ASCII.GetBytes(missile);
-                stream.Write(msg2, 0, msg2.Length);
-                Console.WriteLine("Sent: {0}", missile);
+                Console.WriteLine("on est sorti de la boucle");
 
                 // Shutdown and end connection
                 client.Close();

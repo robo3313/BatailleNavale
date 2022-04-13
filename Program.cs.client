@@ -38,9 +38,20 @@ static void Connect(String server, String message)
         responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
         Console.WriteLine("Received: {0}", responseData);
 
+        // Buffer to store the second response bytes.
+        Byte[] data2 = new Byte[256];
+
+        // String to store the response ASCII representation.
+        String responseData2 = String.Empty;
+        // Read the second batch of the TcpServer response bytes.
+        Console.WriteLine("on est au batch 2");
+        Int32 bytes2 = stream.Read(data2, 0, data2.Length);
+        responseData2 = System.Text.Encoding.ASCII.GetString(data2, 0, bytes2);
+        Console.WriteLine("Received 2: {0}", responseData2);
+
         // Close everything.
-        stream.Close();
-        client.Close();
+        //stream.Close();
+        //client.Close();
     }
     catch (ArgumentNullException e)
     {
@@ -61,6 +72,6 @@ do
     Console.WriteLine("écrire un message à envoyer");
     message = Console.ReadLine();
     Connect("192.168.43.8", message);
-
+    Connect("192.168.43.8", "message2");
 } while (message.ToLower() != "stop");
 
