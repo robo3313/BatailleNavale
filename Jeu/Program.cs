@@ -19,15 +19,17 @@ namespace  Jeu
             Game myGame = new();
             myGame.Start();
 
-            /*Fleet fleet1 = new Fleet();
+            /*Fleet f = new();
+            Boat b = new("toto", "navire", new string[] { "G5", "G6", "G7"});
+            b.WriteInfo();
 
-            Boat b = new("Willy", "Orque", new string[] { "A1", "A2", "A3" });
 
-            b.WriteInfo();*/
-
+            Grid g = new();
+            g.AddBoat(b);
+            g.Display();
+            g.AddImpact(i);*/
         }
     }
-
 
 
 
