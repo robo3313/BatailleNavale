@@ -79,7 +79,7 @@ namespace Jeu
             WriteLine();
         }
 
-        public void Display(
+        public void Display()
         {
             foreach (Boat b in UserFleet)
             {
@@ -87,14 +87,5 @@ namespace Jeu
             }
         }
 
-        public void DisplayBoatPositions()
-        {
-            Console.Write("Boat positions : ");
-            foreach (Position pos in BoatPositions)
-            {
-                Console.Write(pos + " ");
-            }
-            Console.WriteLine();
-        }
     }
 }
