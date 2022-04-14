@@ -5,7 +5,10 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeu", "Jeu\Jeu.csproj", "{F2EDC7F3-72E1-42A4-ACD6-A8EF2572A36A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientTCP", "ClientTCP\ClientTCP.csproj", "{78074A2E-208C-4E4E-9AD5-AC758845914C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2C85EDD-6EF1-4EAF-BCAB-16C085EA0196}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{66CE05AD-FD33-4765-8B1A-84974A0BF83A}"
 EndProject

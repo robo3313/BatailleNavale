@@ -27,23 +27,9 @@ namespace Jeu.BatailleNavaleGame
         /// </summary>
         private void RunMainMenu()
         {
-            string logo = @"
-
-
- ▄▄▄▄    ▄▄▄     ▄▄▄█████▓ ▄▄▄       ██▓ ██▓     ██▓    ▓█████     ███▄    █  ▄▄▄    ██▒   █▓ ▄▄▄       ██▓    ▓█████       ▄▄▄█████▓ ██░ ██ ▓█████      ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▐██▌ 
-▓█████▄ ▒████▄   ▓  ██▒ ▓▒▒████▄    ▓██▒▓██▒    ▓██▒    ▓█   ▀     ██ ▀█   █ ▒████▄ ▓██░   █▒▒████▄    ▓██▒    ▓█   ▀       ▓  ██▒ ▓▒▓██░ ██▒▓█   ▀     ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀     ▐██▌ 
-▒██▒ ▄██▒██  ▀█▄ ▒ ▓██░ ▒░▒██  ▀█▄  ▒██▒▒██░    ▒██░    ▒███      ▓██  ▀█ ██▒▒██  ▀█▄▓██  █▒░▒██  ▀█▄  ▒██░    ▒███         ▒ ▓██░ ▒░▒██▀▀██░▒███      ▒██░▄▄▄░▒██  ▀█▄  ▓██    ▓██░▒███       ▐██▌ 
-▒██░█▀  ░██▄▄▄▄██░ ▓██▓ ░ ░██▄▄▄▄██ ░██░▒██░    ▒██░    ▒▓█  ▄    ▓██▒  ▐▌██▒░██▄▄▄▄██▒██ █░░░██▄▄▄▄██ ▒██░    ▒▓█  ▄       ░ ▓██▓ ░ ░▓█ ░██ ▒▓█  ▄    ░▓█  ██▓░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄     ▓██▒ 
-░▓█  ▀█▓ ▓█   ▓██▒ ▒██▒ ░  ▓█   ▓██▒░██░░██████▒░██████▒░▒████▒   ▒██░   ▓██░ ▓█   ▓██▒▒▀█░   ▓█   ▓██▒░██████▒░▒████▒        ▒██▒ ░ ░▓█▒░██▓░▒████▒   ░▒▓███▀▒ ▓█   ▓██▒▒██▒   ░██▒░▒████▒    ▒▄▄  
-░▒▓███▀▒ ▒▒   ▓▒█░ ▒ ░░    ▒▒   ▓▒█░░▓  ░ ▒░▓  ░░ ▒░▓  ░░░ ▒░ ░   ░ ▒░   ▒ ▒  ▒▒   ▓▒█░░ ▐░   ▒▒   ▓▒█░░ ▒░▓  ░░░ ▒░ ░        ▒ ░░    ▒ ░░▒░▒░░ ▒░ ░    ░▒   ▒  ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░    ░▀▀▒ 
-▒░▒   ░   ▒   ▒▒ ░   ░      ▒   ▒▒ ░ ▒ ░░ ░ ▒  ░░ ░ ▒  ░ ░ ░  ░   ░ ░░   ░ ▒░  ▒   ▒▒ ░░ ░░    ▒   ▒▒ ░░ ░ ▒  ░ ░ ░  ░          ░     ▒ ░▒░ ░ ░ ░  ░     ░   ░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░    ░  ░ 
- ░    ░   ░   ▒    ░        ░   ▒    ▒ ░  ░ ░     ░ ░      ░         ░   ░ ░   ░   ▒     ░░    ░   ▒     ░ ░      ░           ░       ░  ░░ ░   ░      ░ ░   ░   ░   ▒   ░      ░      ░          ░ 
- ░            ░  ░              ░  ░ ░      ░  ░    ░  ░   ░  ░            ░       ░  ░   ░        ░  ░    ░  ░   ░  ░                ░  ░  ░   ░  ░         ░       ░  ░       ░      ░  ░    ░    
-      ░                                                                                  ░                                                                                                          
-";
             string prompt = "Bienvenu dans le jeu Bataille Navale. Que veux tu faire ?\n(Utilise les flèches pour naviguer dans le menu puis la touche entrée pour valider ton choix).\n";
             string[] options = { "Jouer", "A propos", "Quitter" };
-            InitialGameMenu mainMenu = new(prompt, logo, options);
+            InitialGameMenu mainMenu = new(prompt, options, Constants._LOGO);
             int selectedIndex = mainMenu.Run();
 
             switch (selectedIndex)
@@ -89,7 +75,14 @@ namespace Jeu.BatailleNavaleGame
         /// </summary>
         private void RunFirstChoice()
         {
-            WriteLine("On va jouer maintenant...");
+            string prompt = "Choisis le role que tu souhaites avoir durant la partie.\n(Utilise les flèches pour naviguer dans le menu puis la touche entrée pour valider ton choix).\n";
+            string[] options = { "Hébergeur", "Invité" };
+            RoleMenu roleMenu = new(prompt, options,Constants._LOGO);
+            int selectedIndex = roleMenu.Run();
+
+
+
+            //WriteLine("Quel rôle souhaites-tu avoir dans ce jeu ?");
             ExitGame();
         }
     }
