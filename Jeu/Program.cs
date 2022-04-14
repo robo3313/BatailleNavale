@@ -3,7 +3,7 @@ using Jeu.BatailleNavaleGame;
 using Jeu.Menus;
 using static System.Console;
 
-namespace  Jeu
+namespace Jeu
 {
     /// <summary>
     /// classe statique pour les constantes
@@ -67,4 +67,7 @@ namespace  Jeu
             Boat b1 = new("Gary", "Galleon");
             Boat b2 = new("William", "Warship");
             b1.WriteInfo();
- 
+            */
+        }
+    }
+}
