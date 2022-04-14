@@ -10,11 +10,7 @@ namespace Jeu
         };
 
         int[,] G = new int[10, 10] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-        
-  //      for (int i = 0; i<length; i++)
-		//{
-  //          int[,] G = new int { 0, 0, 0, 0, 0, 0, 0};
-		//}
+
         enum CaseType
         {
             Vide = 0,
@@ -25,7 +21,7 @@ namespace Jeu
         }
 
         /// <summary>
-        /// méthode qui affiche la grille
+        /// Méthode qui affiche la grille
         /// </summary>
         /// <param name="firstLineGrid">paramètre de sortie pour la première ligne de la grille</param>
         public void Display(out int firstLineGrid)
@@ -38,7 +34,7 @@ namespace Jeu
         
             WriteLine(" ABCDEFGHIJ");
 
-            for (int i = 0; i<G.GetLength(0); i++)
+            for (int i = 0; i < G.GetLength(0); i++)
             {
                 if (i == 9) decalage -= 1;  //aligne les coordonnées verticales
 
@@ -47,13 +43,15 @@ namespace Jeu
                 for (int j = 0; j < G.GetLength(1); j++)
                 {
                     Write(G[i,j]);
+
+                    Write(AddResult(G[i, j]));
                 }
                 WriteLine();
             }
         }
 
         /// <summary>
-        /// méthode qui affiche la flotte à côté de la grille
+        /// Méthode qui affiche la flotte à côté de la grille
         /// </summary>
         /// <param name="firstLineGrid">correspond à la première ligne de la grille</param>
         public void DisplayFleet(int firstLineGrid)
@@ -73,16 +71,41 @@ namespace Jeu
                 G[ComputerPos[0], ComputerPos[1]] = 2;
 
                 WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
-            } 
+            }
         }
-        /*public void AddImpact()
+        public void AddImpact(Position p)
         {
-            int[] ComputerPos = GetComputerCoordinate(column.column, number.row);
-            G[ComputerPos[0], ComputerPos[1]] = 1;
+            WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
 
-            Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
-        }*/
-          
+            int[] ComputerPos = GetComputerCoordinate(p.Column, p.Row);
+            G[ComputerPos[0], ComputerPos[1]] += 1;
+
+            Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
+
+        }
+        public string AddResult(int param)
+        {
+            switch(param)
+            {
+                case 0:
+                    return (" ");
+
+                case 1:
+                    return ("X");
+
+                case 2:
+                    return ("B");
+
+                case 3:
+                    return ("T");
+
+                case 4:
+                    return ("C");
+            }
+            return " ";
+
+         }
+
         public int[] GetComputerCoordinate(char column, int row)  // ex : col = D, row = 7
         {
             int[] res = new int[2];
@@ -90,5 +113,7 @@ namespace Jeu
             Case.TryGetValue(column, out res[1]);
             return res;
         }
+
+        
     }
 }

@@ -37,16 +37,11 @@ namespace Jeu
             }
         }
 
-        public void AddBoat(string name, string type, string[] newCoordinates)
+        public void AddBoat(string name, string type, Position[] coordinates)
         {
             try
-            {
-                Position[] coordinates = Position.createFromStringArray(newCoordinates);
-                CheckcoordinatesInMap(coordinates);
-                CheckBoatCollisions(coordinates);
-                CheckBoatContinuity(coordinates);
+            { 
                 Boat b = new(name, type, coordinates);
-
                 UserFleet.Add(b);
                 foreach (Position pos in coordinates)
                 {
@@ -60,15 +55,18 @@ namespace Jeu
             }
         }
 
-        public void CheckcoordinatesInMap(Position[] coordinates)
+        public Boat? Attack(Position coordinates)
         {
-            foreach (Position pos in coordinates)
+            int tmp;
+            foreach (Boat boat in UserFleet)
             {
-                if (pos.Column < 'A' || pos.Column > 'J' || pos.Row < 1 || pos.Row > 10)
+                tmp = boat.Attack(coordinates);
+                if (tmp > 0)
                 {
-                    throw new Exception("Impossible de placer un bateau en " + pos.ToString());
+                    return boat;
                 }
             }
+            return null;
         }
 
         public void DisplayBoatPositions()
@@ -81,36 +79,22 @@ namespace Jeu
             WriteLine();
         }
 
-        public void CheckBoatCollisions(Position[] coordinates)
+        public void Display(
         {
-            DisplayBoatPositions();
-            foreach (Position testedBoatPosition in coordinates)
+            foreach (Boat b in UserFleet)
             {
-                if (BoatPositions.Contains(testedBoatPosition))
-                {
-                    WriteLine("Identified collision for position {0}", testedBoatPosition);
-                    throw new Exception("Collision en " + testedBoatPosition);
-                }
+                b.WriteInfo();
             }
         }
 
-        public void CheckBoatContinuity(Position[] coordinates)
+        public void DisplayBoatPositions()
         {
-            Position? previousCoor = null;
-            foreach (Position coor in coordinates)
+            Console.Write("Boat positions : ");
+            foreach (Position pos in BoatPositions)
             {
-                if (previousCoor is null)
-                {
-                    previousCoor = coor;
-                    continue;
-                }
-                if (!coor.isNextTo(previousCoor))
-                {
-                    throw new Exception("Bateau inconsistent "+previousCoor+" "+coor);
-                }
-                previousCoor = coor;
+                Console.Write(pos + " ");
             }
-
+            Console.WriteLine();
         }
-     }
+    }
 }
