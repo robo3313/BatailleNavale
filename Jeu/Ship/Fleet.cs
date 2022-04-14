@@ -1,12 +1,22 @@
 ﻿namespace Jeu
 {
-    class Fleet
+    /// <summary>
+    /// classe correspondant à la flotte
+    /// </summary>
+    public class Fleet
     {
-        List<Boat> boats;
+        /// <summary>
+        /// propriété UserFleet qui est une liste d'objet Boat
+        /// </summary>
+        public List<Boat> UserFleet { get; set; }
 
-        public Fleet()
+        /// <summary>
+        /// constructeur de la classe Fleet
+        /// </summary>
+        /// <param name="listboat"></param>
+        public Fleet(List<Boat> listboat)
         {
-            boats = new List<Boat>();
+            UserFleet = listboat;
         }
 
         public void AddBoat(string name, string type, string[] newCoordinates)

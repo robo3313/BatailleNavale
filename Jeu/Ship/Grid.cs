@@ -8,6 +8,11 @@
         };
 
         int[,] G = new int[10, 10] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+        
+  //      for (int i = 0; i<length; i++)
+		//{
+  //          int[,] G = new int { 0, 0, 0, 0, 0, 0, 0};
+		//}
         enum CaseType
         {
             Vide = 0,
@@ -18,10 +23,18 @@
         }
         public void Display()
         {
+            int decalage = 20;  //décalage affichage grille
+
+            int currentLineCursor = Console.CursorLeft;
+            Console.SetCursorPosition(0 + decalage, Console.CursorTop);
+        
             Console.WriteLine(" ABCDEFGHIJ");
 
             for (int i = 0; i<G.GetLength(0); i++)
             {
+                if (i == 9) decalage -= 1;  //aligne les coordonnées verticales
+
+                Console.SetCursorPosition(0 + decalage, Console.CursorTop);
                 Console.Write(i+1);
                 for (int j = 0; j < G.GetLength(1); j++)
                 {
