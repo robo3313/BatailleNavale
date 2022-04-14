@@ -12,6 +12,25 @@ public class Serial
 
         return jsonString;
     }
+    public Car JsonDeserializeFunction(String a)
+    {
+        var jsonDeserialized = JsonSerializer.Deserialize<Car>(a);
+
+
+        return jsonDeserialized;
+    }
+}
+
+public class Serial
+{
+    public string JsonDeserializeFunction(Car a, string ip = "192.168.43.8")
+    {
+        string jsonString = JsonSerializer.Serialize(a);
+
+        //String string = Connect(ip, jsonString);
+
+        return jsonString;
+    }
 
 }
 
