@@ -58,6 +58,22 @@
             }
         }
 
+        public bool Attack(Position coordinates)
+        {
+            foreach (Boat boat in UserFleet)
+            {
+                foreach (KeyValuePair<Position, bool> pos in boat.Positions)
+                {
+                    if (pos.Key == coordinates)
+                    {
+                        boat.Positions[pos.Key] = false;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public void CheckcoordinatesInMap(Position[] coordinates)
         {
             foreach (Position pos in coordinates)
@@ -71,7 +87,6 @@
 
         public void CheckBoatCollisions(Position[] coordinates)
         {
-            DisplayBoatPositions();
             foreach (Position testedBoatPosition in coordinates)
             {
                 if (BoatPositions.Contains(testedBoatPosition))
@@ -99,6 +114,14 @@
                 previousCoor = coor;
             }
 
+        }
+
+        public void Display()
+        {
+            foreach (Boat b in UserFleet)
+            {
+                b.WriteInfo();
+            }
         }
 
         public void DisplayBoatPositions()

@@ -3,7 +3,7 @@
     public class Engine
     {
         int MapSize;
-        Fleet Fleet1 = new();
+        public Fleet Fleet1 = new();
         //Fleet Fleet2 = new();
         public List<Position> AttackPositions = new();
 
@@ -17,6 +17,11 @@
             MapSize = size;
         }
 
+        public void AddBoat(string name, string type, string[] newCoordinates)
+        {
+            Fleet1.AddBoat(name, type, newCoordinates);
+        }
+
         public void Attack(Position coordinates)
         {
             try
@@ -24,11 +29,15 @@
                 CheckAttackInMap(coordinates);
                 CheckAlreadyAttacked(coordinates);
                 AttackPositions.Add(coordinates);
+                if (Fleet1.Attack(coordinates))
+                {
+                    Console.WriteLine("Touche en {0} !", coordinates);
+                }
                 Console.WriteLine("Added Impact : " + coordinates.ToString());
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
+                Console.WriteLine("Erreur lors de l'attaque : {0}", e.Message);
             }
         }
 
@@ -41,7 +50,6 @@
         }
         public void CheckAlreadyAttacked(Position coordinates)
         {
-            DisplayAttackPositions();
             if (AttackPositions.Contains(coordinates))
             {
                 throw new Exception("Déjà attaqué en " + coordinates.ToString());
@@ -56,6 +64,11 @@
                 Console.Write(pos + " ");
             }
             Console.WriteLine();
+        }
+
+        public void DisplayFleets()
+        {
+            Fleet1.Display();
         }
     }
 }

@@ -8,7 +8,7 @@
         public string Name;
         public string Type;
         public Dictionary<Position, bool> Positions;
-        public bool Alive = false;
+        public bool Alive = true;
 
         static public string[] Types = new string[] { "Frigate", "Galleon", "Battleship" };
 
@@ -34,21 +34,20 @@
 
             foreach (Position pos in positions)
             {
-                Positions.Add(pos, false);
+                Positions.Add(pos, true);
             }
         }
         // affiche name and type of boat
         public void WriteInfo()
         {
-            Console.WriteLine("Mon nom est :{0}", Name);
-            Console.WriteLine("Mon type est : {0}", Type);
+            Console.WriteLine("     Nom: {0}, Type: {1}", Name, Type);
             if (Positions == null)
             {
                 return;
             }
             foreach(KeyValuePair<Position, bool> pair in Positions)
             {
-                Console.WriteLine("Ma position est : {0}  {1}", pair.Key.Column, pair.Key.Row);
+                Console.WriteLine("     Pos: {0}{1}, Alive: {2}", pair.Key.Column, pair.Key.Row, pair.Value);
             }
         }
         public override string ToString()
