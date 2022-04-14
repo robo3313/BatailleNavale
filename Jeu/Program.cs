@@ -1,7 +1,7 @@
-﻿/*using System;
+﻿using System;
 using Jeu.BatailleNavaleGame;
 using Jeu.Menus;
-using static System.Console;*/
+using static System.Console;
 
 namespace  Jeu
 {

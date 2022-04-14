@@ -25,7 +25,7 @@
             Type = type;
         }
 
-        public Boat(string name, string type, string[] positions)
+        public Boat(string name, string type, Position[] positions)
         {
             Name = name;
             Type = type;
