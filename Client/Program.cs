@@ -1,12 +1,24 @@
-﻿using System;
+﻿
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Client;
 
 
-static void Connect(String server, String message)
+string JsonSerializeFunction(EnvironmentVariableTarget a)
 {
+    string jsonString = JsonSerializer.Serialize(a);
+
+    return jsonString;
+}
+
+static String Connect(String server, String message = "No message")
+{
+    String returned = "valeur de retour";
     try
     {
         // Create a TcpClient,TcpServer at IP address 192.168.43.8, port 13000 being created
@@ -36,8 +48,12 @@ static void Connect(String server, String message)
         // Read the first batch of the TcpServer response bytes.
         Int32 bytes = stream.Read(data, 0, data.Length);
         responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-        Console.WriteLine("Received: {0}", responseData);
+        //Console.WriteLine("Received: {0}", responseData);
 
+
+
+        /*
+        //***********************************************************************
         // Buffer to store the second response bytes.
         Byte[] data2 = new Byte[256];
 
@@ -48,10 +64,16 @@ static void Connect(String server, String message)
         Int32 bytes2 = stream.Read(data2, 0, data2.Length);
         responseData2 = System.Text.Encoding.ASCII.GetString(data2, 0, bytes2);
         Console.WriteLine("Received 2: {0}", responseData2);
+        //***********************************************************************
+        */
+        returned = responseData;
 
-        // Close everything.
-        //stream.Close();
-        //client.Close();
+
+        //Close everything
+        stream.Close();
+        client.Close();
+
+
     }
     catch (ArgumentNullException e)
     {
@@ -64,14 +86,50 @@ static void Connect(String server, String message)
 
     //Console.WriteLine("\n Press Enter to continue...");
     //Console.Read();
+    return returned;
 }
-string message = "";
 
+
+string coordinatesToAttack = " ";
+string ipAddress = "127.0.0.1";
+// test serialize
+
+// </wf>
+
+Car myObj = new Car();
+
+String test1=JsonSerializeFunction(myObj);
+
+
+Console.WriteLine(test1);
+String test = Console.ReadLine()!;
+
+
+
+Console.WriteLine("Donner l'addresse IP du serveur");
+ipAddress = Console.ReadLine()!;
+//Connect("192.168.43.8");
+Connect(ipAddress);
 do
 {
-    Console.WriteLine("écrire un message à envoyer");
-    message = Console.ReadLine();
-    Connect("192.168.43.8", message);
-    Connect("192.168.43.8", "message2");
-} while (message.ToLower() != "stop");
+    Console.WriteLine("où envoyer le missile?");
+    coordinatesToAttack = Console.ReadLine()!;
+    string hitOrNot = Connect("192.168.43.8", coordinatesToAttack);
+    Console.WriteLine("message reçu {0}", hitOrNot);
+    // locally updating the opponent map
+    // waiting for the opponent to play
+    // get his move (missile)
+    Console.WriteLine("Waiting for opponent's move");
+    string coordinatesAttacked = Connect("192.168.43.8");
+    Console.WriteLine("message reçu {0}", coordinatesAttacked);
+    // updating my map
+    // telling oppponent whether they hit me or not
+    Connect("192.168.43.8", "not hit"); // to process
+} while (coordinatesToAttack.ToLower() != "stop");
+
+
+
+
+
+
 
