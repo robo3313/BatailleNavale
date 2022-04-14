@@ -9,6 +9,14 @@
         /// propriété UserFleet qui est une liste d'objet Boat
         /// </summary>
         public List<Boat> UserFleet { get; set; }
+        public List<Position> BoatPositions;
+
+
+        public Fleet()
+        {
+            BoatPositions = new();
+            UserFleet = new List<Boat>();
+        }
 
         /// <summary>
         /// constructeur de la classe Fleet
@@ -25,9 +33,14 @@
             {
                 Position[] coordinates = Position.createFromStringArray(newCoordinates);
                 CheckcoordinatesInMap(coordinates);
+                CheckBoatCollisions(coordinates);
                 Boat b = new(name, type, coordinates);
 
                 UserFleet.Add(b);
+                foreach (Position pos in coordinates)
+                {
+                    BoatPositions.Add(pos);
+                }
             }
             catch (Exception e)
             {
@@ -45,39 +58,21 @@
                 }
             }
         }
-    }
 
-      /*  public void CheckBoatCollisions(Position[] coordinates)
+        public void CheckBoatCollisions(Position[] coordinates)
         {
-            
-            foreach (string position in coordinates)
+
+            foreach (Position testedBoatPosition in coordinates)
             {
-                char letter = Char.ToUpper(position[0]);
-                int number;
-                // Analyse des coordinates qui ont passé la vérification pour savoir si un bateau est déjà en place sur les cases données.
-                foreach (i in coordinates)
+                if (BoatPositions.Contains(testedBoatPosition))
                 {
-                    if (letter + number == string[i])
-                        throw new Exception("Impossible de placer un bateau en " + position + " car un bateau est déjà disposé sur cette case");
-                    if (letter + numbers == string[i])
-                        throw new Exception("Impossible de placer un bateau en " + position + " car un bateau est déjà disposé sur cette case");
-
+                    throw new Exception("Impossible de placer un bateau en " + testedBoatPosition);
                 }
-
             }
-           
-        } */
-
- /*       public void CheckBoatContinuity(Position[] coordinates)
-        {
-            foreach (Position c in coordinates)
-
-            {
-                Console.WriteLine(coordinates[c]); 
-            }
-            
-            
         }
 
-    } */
-} 
+        public void CheckBoatContinuity(Position[] coordinates)
+        {
+        }
+     }
+}

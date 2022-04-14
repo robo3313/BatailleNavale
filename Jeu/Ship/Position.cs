@@ -1,6 +1,6 @@
 ﻿namespace Jeu
 {
-    public class Position
+    public class Position : IEquatable<Position>
     {
         public char Column { get; set; }
         public int Row { get; set; }
@@ -38,6 +38,23 @@
         {
             return Column.ToString() + Row.ToString();
         }
+
+        static public bool operator ==(Position first, Position second)
+        {
+            return first.Column == second.Column && first.Row == second.Row;
+        }
+
+        static public bool operator !=(Position first, Position second)
+        {
+            return first.Column != second.Column || first.Row != second.Row;
+        }
+
+        public bool Equals(Position p)
+        {
+
+            return Column != p.Column || Row != p.Row;
+        }
+
 
     }
 }
