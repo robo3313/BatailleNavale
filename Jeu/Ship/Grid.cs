@@ -29,7 +29,6 @@
                 }
                 Console.WriteLine();
             }
-
         }
         public void AddBoat(Boat b)
         {
@@ -43,14 +42,14 @@
                 Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
             } 
         }
-        /*public void AddImpact(Position i)
+        /*public void AddImpact()
         {
-       
-            int[] ComputerPos =  
-                G[ComputerPos[0], ComputerPos[1]] = 1;
+            int[] ComputerPos = GetComputerCoordinate(column.column, number.row);
+            G[ComputerPos[0], ComputerPos[1]] = 1;
 
             Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
         }*/
+          
         public int[] GetComputerCoordinate(char column, int row)  // ex : col = D, row = 7
         {
             int[] res = new int[2];

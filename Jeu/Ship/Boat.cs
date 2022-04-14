@@ -32,10 +32,9 @@
             Positions = new ();
             Position newPosition;
 
-            foreach (string pos in positions)
+            foreach (Position pos in positions)
             {
-                newPosition = Position.createFromString(pos);
-                Positions.Add(newPosition, false);
+                Positions.Add(pos, false);
             }
         }
         // affiche name and type of boat
