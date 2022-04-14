@@ -8,7 +8,12 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <ApplicationIcon>batteShipIcon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="batteShipIcon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />

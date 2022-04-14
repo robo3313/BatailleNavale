@@ -21,9 +21,15 @@
             Touche = 3,
             Coule = 4
         }
-        public void Display()
+
+        /// <summary>
+        /// méthode qui affiche la grille
+        /// </summary>
+        /// <param name="firstLineGrid">paramètre de sortie pour la première ligne de la grille</param>
+        public void Display(out int firstLineGrid)
         {
             int decalage = 20;  //décalage affichage grille
+            firstLineGrid = Console.CursorTop;
 
             int currentLineCursor = Console.CursorLeft;
             Console.SetCursorPosition(0 + decalage, Console.CursorTop);
@@ -42,6 +48,18 @@
                 }
                 Console.WriteLine();
             }
+        }
+
+        /// <summary>
+        /// méthode qui affiche la flotte à côté de la grille
+        /// </summary>
+        /// <param name="firstLineGrid">correspond à la première ligne de la grille</param>
+        public void DisplayFleet(int firstLineGrid)
+        {
+            int decalage = 50;  //décalage affichage flotte
+            Console.SetCursorPosition(0 + decalage, firstLineGrid);
+            Console.WriteLine("Placer votre flotte sur la grille");
+            Console.SetCursorPosition(0 + decalage, firstLineGrid + 1); //replace le curseur avec le décalage 
         }
         public void AddBoat(Boat b)
         {
