@@ -8,11 +8,7 @@
         };
 
         int[,] G = new int[10, 10] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-        
-  //      for (int i = 0; i<length; i++)
-		//{
-  //          int[,] G = new int { 0, 0, 0, 0, 0, 0, 0};
-		//}
+
         enum CaseType
         {
             Vide = 0,
@@ -23,7 +19,7 @@
         }
 
         /// <summary>
-        /// méthode qui affiche la grille
+        /// Méthode qui affiche la grille
         /// </summary>
         /// <param name="firstLineGrid">paramètre de sortie pour la première ligne de la grille</param>
         public void Display(out int firstLineGrid)
@@ -51,7 +47,7 @@
         }
 
         /// <summary>
-        /// méthode qui affiche la flotte à côté de la grille
+        /// Méthode qui affiche la flotte à côté de la grille
         /// </summary>
         /// <param name="firstLineGrid">correspond à la première ligne de la grille</param>
         public void DisplayFleet(int firstLineGrid)
@@ -78,7 +74,7 @@
             Console.WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
 
             int[] ComputerPos = GetComputerCoordinate(p.Column, p.Row);
-            G[ComputerPos[0], ComputerPos[1]] = 1;
+            G[ComputerPos[0], ComputerPos[1]] += 1;
 
             Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
         }

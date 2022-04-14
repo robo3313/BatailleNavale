@@ -35,16 +35,11 @@
             }
         }
 
-        public void AddBoat(string name, string type, string[] newCoordinates)
+        public void AddBoat(string name, string type, Position[] coordinates)
         {
             try
-            {
-                Position[] coordinates = Position.createFromStringArray(newCoordinates);
-                CheckcoordinatesInMap(coordinates);
-                CheckBoatCollisions(coordinates);
-                CheckBoatContinuity(coordinates);
+            { 
                 Boat b = new(name, type, coordinates);
-
                 UserFleet.Add(b);
                 foreach (Position pos in coordinates)
                 {
@@ -58,7 +53,7 @@
             }
         }
 
-        public int Attack(Position coordinates)
+        public Boat? Attack(Position coordinates)
         {
             int tmp;
             foreach (Boat boat in UserFleet)
@@ -66,52 +61,10 @@
                 tmp = boat.Attack(coordinates);
                 if (tmp > 0)
                 {
-                    return tmp;
+                    return boat;
                 }
             }
-            return 0;
-        }
-
-        public void CheckcoordinatesInMap(Position[] coordinates)
-        {
-            foreach (Position pos in coordinates)
-            {
-                if (pos.Column < 'A' || pos.Column > 'J' || pos.Row < 1 || pos.Row > 10)
-                {
-                    throw new Exception("Impossible de placer un bateau en " + pos.ToString());
-                }
-            }
-        }
-
-        public void CheckBoatCollisions(Position[] coordinates)
-        {
-            foreach (Position testedBoatPosition in coordinates)
-            {
-                if (BoatPositions.Contains(testedBoatPosition))
-                {
-                    Console.WriteLine("Identified collision for position {0}", testedBoatPosition);
-                    throw new Exception("Collision en " + testedBoatPosition);
-                }
-            }
-        }
-
-        public void CheckBoatContinuity(Position[] coordinates)
-        {
-            Position? previousCoor = null;
-            foreach (Position coor in coordinates)
-            {
-                if (previousCoor is null)
-                {
-                    previousCoor = coor;
-                    continue;
-                }
-                if (!coor.isNextTo(previousCoor))
-                {
-                    throw new Exception("Bateau inconsistent "+previousCoor+" "+coor);
-                }
-                previousCoor = coor;
-            }
-
+            return null;
         }
 
         public void Display()

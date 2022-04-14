@@ -70,7 +70,7 @@
         // affiche name and type of boat
         public void WriteInfo()
         {
-            Console.WriteLine("     Nom: {0}, Type: {1}, Statut: {2}", Name, Type);
+            Console.WriteLine("     Nom: {0}, Type: {1}, Statut: {2}", Name, Type, Alive);
             if (Positions == null)
             {
                 return;
