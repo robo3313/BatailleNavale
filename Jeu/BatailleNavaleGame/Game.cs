@@ -116,8 +116,10 @@ namespace Jeu.BatailleNavaleGame
 
             //afficher la flotte
             grid.DisplayFleet(firstLineGrid);
-            
+
             //positionner la flotte
+            InitialGameMenu menuBoat = new("Choisis un bateau dans la liste", Boat.Types);
+            menuBoat.Run(false);
         }
 
         public void DisplayTimerMessage()
@@ -134,12 +136,12 @@ namespace Jeu.BatailleNavaleGame
         //supprime le contenu de la ligne dans la console
         public void DeleteLineContent()
         {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor - 1);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor);
+            int currentLineCursor = CursorTop;
+            SetCursorPosition(0, CursorTop);
+            Write(new string(' ', WindowWidth));
+            SetCursorPosition(0, currentLineCursor - 1);
+            Write(new string(' ', WindowWidth));
+            SetCursorPosition(0, currentLineCursor);
         }
     }
 }

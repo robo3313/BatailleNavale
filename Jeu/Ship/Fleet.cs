@@ -1,4 +1,6 @@
-﻿namespace Jeu
+﻿using static System.Console;
+
+namespace Jeu
 {
     /// <summary>
     /// classe correspondant à la flotte
@@ -50,11 +52,11 @@
                 {
                     BoatPositions.Add(pos);
                 }
-                Console.WriteLine("Added boat : " + b.ToString());
+                WriteLine("Added boat : " + b.ToString());
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
+                WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
             }
         }
 
@@ -71,12 +73,12 @@
 
         public void DisplayBoatPositions()
         {
-            Console.Write("Boat positions : ");
+            Write("Boat positions : ");
             foreach (Position pos in BoatPositions)
             {
-                Console.Write(pos+ " ");
+                Write(pos+ " ");
             }
-            Console.WriteLine();
+            WriteLine();
         }
 
         public void CheckBoatCollisions(Position[] coordinates)
@@ -86,7 +88,7 @@
             {
                 if (BoatPositions.Contains(testedBoatPosition))
                 {
-                    Console.WriteLine("Identified collision for position {0}", testedBoatPosition);
+                    WriteLine("Identified collision for position {0}", testedBoatPosition);
                     throw new Exception("Collision en " + testedBoatPosition);
                 }
             }

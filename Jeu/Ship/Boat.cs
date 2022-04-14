@@ -1,4 +1,6 @@
-﻿namespace Jeu
+﻿using static System.Console;
+
+namespace Jeu
 {
     /// <summary>
     /// classe Boat
@@ -10,7 +12,7 @@
         public Dictionary<Position, bool> Positions;
         public bool Alive = false;
 
-        static public string[] Types = new string[] { "Frigate", "Galleon", "Battleship" };
+        public static string[] Types = new string[] { "Frigate", "Galleon", "Battleship" };
 
         /// <summary>
         /// constructeur de la classe Boat
@@ -40,15 +42,15 @@
         // affiche name and type of boat
         public void WriteInfo()
         {
-            Console.WriteLine("Mon nom est :{0}", Name);
-            Console.WriteLine("Mon type est : {0}", Type);
+            WriteLine("Mon nom est :{0}", Name);
+            WriteLine("Mon type est : {0}", Type);
             if (Positions == null)
             {
                 return;
             }
             foreach(KeyValuePair<Position, bool> pair in Positions)
             {
-                Console.WriteLine("Ma position est : {0}  {1}", pair.Key.Column, pair.Key.Row);
+                WriteLine("Ma position est : {0}  {1}", pair.Key.Column, pair.Key.Row);
             }
         }
         public override string ToString()
