@@ -94,7 +94,13 @@ namespace Jeu.BatailleNavaleGame
             ExitGame();
         }
 
-        public void DisplayGridAndFleet(Grid grid, int selectedIndex, bool afficherAutres = false)
+        /// <summary>
+        /// méthode qui affiche la grille et la flotte
+        /// </summary>
+        /// <param name="grid">objet grille</param>
+        /// <param name="selectedIndex">l'index dans le tableau</param>
+        /// <param name="displayOthers">permet d'afficher des distinctions entre les grilles</param>
+        public void DisplayGridAndFleet(Grid grid, int selectedIndex, bool displayOthers = false)
         {
             Clear();
             WriteLine(Constants._LOGO, ForegroundColor = ConsoleColor.Green);
@@ -105,10 +111,12 @@ namespace Jeu.BatailleNavaleGame
             DisplayTimerMessage();
 
             //Afficher la grille du joueur
-            grid.Display();
+            int firstLineGrid;
+            grid.Display(out firstLineGrid);
 
             //afficher la flotte
-
+            grid.DisplayFleet(firstLineGrid);
+            
             //positionner la flotte
         }
 
