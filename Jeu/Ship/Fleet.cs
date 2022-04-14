@@ -1,4 +1,6 @@
-﻿namespace Jeu
+﻿using static System.Console;
+
+namespace Jeu
 {
     /// <summary>
     /// classe correspondant à la flotte
@@ -45,11 +47,11 @@
                 {
                     BoatPositions.Add(pos);
                 }
-                Console.WriteLine("Added boat : " + b.ToString());
+                WriteLine("Added boat : " + b.ToString());
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
+                WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
             }
         }
 
@@ -67,7 +69,17 @@
             return null;
         }
 
-        public void Display()
+        public void DisplayBoatPositions()
+        {
+            Write("Boat positions : ");
+            foreach (Position pos in BoatPositions)
+            {
+                Write(pos+ " ");
+            }
+            WriteLine();
+        }
+
+        public void Display(
         {
             foreach (Boat b in UserFleet)
             {

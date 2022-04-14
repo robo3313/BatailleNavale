@@ -26,11 +26,15 @@ namespace Jeu.Menus
         /// <summary>
         /// méthode d'affichage du menu pour le choix du rôle
         /// </summary>
-        protected override void DisplayOptions()
+        protected override void DisplayOptions(int decalage = 0)
         {
             //afficher le logo du jeu
-            WriteLine(Logo, ForegroundColor = ConsoleColor.Green);
-            ResetColor();
+            if(decalage==0)
+            {
+                WriteLine(Logo, ForegroundColor = ConsoleColor.Green);
+                ResetColor();
+            }
+
             //affiche et formate les instructions du menu principal au début de l'application
             WriteLine(Prompt);
 
@@ -63,6 +67,7 @@ namespace Jeu.Menus
                     BackgroundColor = ConsoleColor.Black;
                 }
 
+                SetCursorPosition(decalage, CursorTop);
                 WriteLine($"{prefix} << {currentOption} >> {suffix}");
             }
             ResetColor();
