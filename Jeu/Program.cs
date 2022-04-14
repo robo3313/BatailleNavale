@@ -41,18 +41,14 @@ namespace  Jeu
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            Game myGame = new();
-            myGame.Start();
+            /*Game myGame = new();
+            myGame.Start();*/
 
-            /*Fleet f = new();
-            Boat b = new("toto", "navire", new string[] { "G5", "G6", "G7"});
-            b.WriteInfo();
-
-
-            Grid g = new();
-            g.AddBoat(b);
-            g.Display();
-            g.AddImpact(i);*/
+            Fleet f = new();
+            Boat b1 = new("Gary", "Galleon");
+            Boat b2 = new("William", "Warship");
+            b1.WriteInfo();
+            b2.WriteInfo();
         }
     }
 
