@@ -1,7 +1,7 @@
-﻿using System;
+﻿/*using System;
 using Jeu.BatailleNavaleGame;
 using Jeu.Menus;
-using static System.Console;
+using static System.Console;*/
 
 namespace  Jeu
 {
@@ -44,9 +44,19 @@ namespace  Jeu
             Game myGame = new();
             myGame.Start();
 
+            /*
+            Fleet fleet1 = new Fleet();
+            fleet1.AddBoat("Willy", "Orque", new string[] { "A1", "A2", "A3" });
+
+            fleet1.AddBoat("Willy", "Orque", new string[] { "D5", "D6", "D7" });
+
+            fleet1.AddBoat("Willy", "Orque", new string[] { "B9", "B10", "B11" });
+            */
+
             /*Fleet f = new();
             Boat b = new("toto", "navire", new string[] { "G5", "G6", "G7"});
             b.WriteInfo();
+
 
 
             Grid g = new();

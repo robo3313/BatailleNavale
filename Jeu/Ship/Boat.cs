@@ -9,25 +9,17 @@
         public string Type;
         public Dictionary<Position, bool> Positions;
         public bool Alive = false;
-
-        /// <summary>
-        /// constructeur de la classe Boat
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        /// <param name="positions"></param>
-
-        public Boat(string name, string type, string[] positions)
+        
+        public Boat(string name, string type, Position[] positions)
         {
             Name = name;
             Type = type;
             Positions = new ();
             Position newPosition;
 
-            foreach (string pos in positions)
+            foreach (Position pos in positions)
             {
-                newPosition = Position.createFromString(pos);
-                Positions.Add(newPosition, false);
+                Positions.Add(pos, false);
             }
             Alive = true;
         }
