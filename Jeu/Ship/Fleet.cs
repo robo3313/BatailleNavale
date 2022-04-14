@@ -58,20 +58,18 @@
             }
         }
 
-        public bool Attack(Position coordinates)
+        public int Attack(Position coordinates)
         {
+            int tmp;
             foreach (Boat boat in UserFleet)
             {
-                foreach (KeyValuePair<Position, bool> pos in boat.Positions)
+                tmp = boat.Attack(coordinates);
+                if (tmp > 0)
                 {
-                    if (pos.Key == coordinates)
-                    {
-                        boat.Positions[pos.Key] = false;
-                        return true;
-                    }
+                    return tmp;
                 }
             }
-            return false;
+            return 0;
         }
 
         public void CheckcoordinatesInMap(Position[] coordinates)

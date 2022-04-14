@@ -29,11 +29,8 @@
                 CheckAttackInMap(coordinates);
                 CheckAlreadyAttacked(coordinates);
                 AttackPositions.Add(coordinates);
-                if (Fleet1.Attack(coordinates))
-                {
-                    Console.WriteLine("Touche en {0} !", coordinates);
-                }
-                Console.WriteLine("Added Impact : " + coordinates.ToString());
+                int res = Fleet1.Attack(coordinates);
+                Console.WriteLine("Impact: {0}, resultat: {1}", coordinates.ToString(), res);
             }
             catch (Exception e)
             {
