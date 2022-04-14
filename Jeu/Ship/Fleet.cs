@@ -1,17 +1,34 @@
 ﻿namespace Jeu
 {
-    class Fleet
+    /// <summary>
+    /// classe correspondant à la flotte
+    /// </summary>
+    public class Fleet
     {
-        List<Boat> boats;
+        /// <summary>
+        /// propriété UserFleet qui est une liste d'objet Boat
+        /// </summary>
+        public List<Boat> UserFleet { get; set; }
 
-        public Fleet()
+        /// <summary>
+        /// constructeur de la classe Fleet
+        /// </summary>
+        /// <param name="listboat"></param>
+        public Fleet(List<Boat> listboat)
         {
-            boats = new List<Boat>();
+            UserFleet = listboat;
         }
 
-        public void AddBoat(Boat newBoat)
+        /// <summary>
+        /// méthode qui affiche la flotte
+        /// </summary>
+        public void DisplayFleet()
         {
-            boats.Add(newBoat);
+            //List<Boat> listBoat = new List<Boat>();
+            //listBoat.Add(new Boat("T1", "Torpilleur", new string[] { "A1", "A4" }));
+
+            //Fleet fleet = new Fleet(new List<Boat>{ new Boat("T1", "Torpilleur", new string[] { "A1", "A4" }) });
+            //fleet = new(listBoat);
         }
     }
 }
