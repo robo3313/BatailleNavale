@@ -36,7 +36,7 @@
         
             Console.WriteLine(" ABCDEFGHIJ");
 
-            for (int i = 0; i<G.GetLength(0); i++)
+            for (int i = 0; i < G.GetLength(0); i++)
             {
                 if (i == 9) decalage -= 1;  //aligne les coordonnées verticales
 
@@ -44,7 +44,7 @@
                 Console.Write(i+1);
                 for (int j = 0; j < G.GetLength(1); j++)
                 {
-                    Console.Write(G[i,j]);
+                    Console.Write(AddResult(G[i, j]));
                 }
                 Console.WriteLine();
             }
@@ -71,16 +71,40 @@
                 G[ComputerPos[0], ComputerPos[1]] = 2;
 
                 Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
-            } 
+            }
         }
-        /*public void AddImpact()
+        public void AddImpact(Position p)
         {
-            int[] ComputerPos = GetComputerCoordinate(column.column, number.row);
+            Console.WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
+
+            int[] ComputerPos = GetComputerCoordinate(p.Column, p.Row);
             G[ComputerPos[0], ComputerPos[1]] = 1;
 
-            Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
-        }*/
-          
+            Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
+        }
+        public string AddResult(int param)
+        {
+            switch(param)
+            {
+                case 0:
+                    return (" ");
+
+                case 1:
+                    return ("X");
+
+                case 2:
+                    return ("B");
+
+                case 3:
+                    return ("T");
+
+                case 4:
+                    return ("C");
+            }
+            return " ";
+
+         }
+
         public int[] GetComputerCoordinate(char column, int row)  // ex : col = D, row = 7
         {
             int[] res = new int[2];
@@ -88,5 +112,7 @@
             Case.TryGetValue(column, out res[1]);
             return res;
         }
+
+        
     }
 }
