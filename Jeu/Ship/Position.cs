@@ -1,6 +1,6 @@
 ﻿namespace Jeu
 {
-    class Position
+    public class Position
     {
         public char Column { get; set; }
         public int Row { get; set; }
