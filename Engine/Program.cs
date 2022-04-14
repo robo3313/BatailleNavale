@@ -1,6 +1,6 @@
 ﻿using Jeu;
 
-Fleet fleet1 = new();
+/*Fleet fleet1 = new();
 
 fleet1.AddBoat("Un", "Corvette", new string[] { "A1", "A2", "A3" });
 
@@ -13,4 +13,17 @@ fleet1.AddBoat("Trois", "Corvette", new string[] { "G4", "G5", "G7" });
 fleet1.AddBoat("Quatre", "Corvette", new string[] { "F5", "B5", "H5" });
 
 
-fleet1.AddBoat("Cinq", "Corvette", new string[] { "C5", "D6", "E7" });
+fleet1.AddBoat("Cinq", "Corvette", new string[] { "C5", "D6", "E7" });*/
+
+
+Engine e = new();
+
+e.Attack(new Position('B', 5));
+
+
+e.Attack(new Position('C', 6));
+
+
+e.Attack(new Position('B', 5));
+
+

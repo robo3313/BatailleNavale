@@ -69,16 +69,6 @@
             }
         }
 
-        public void DisplayBoatPositions()
-        {
-            Console.Write("Boat positions : ");
-            foreach (Position pos in BoatPositions)
-            {
-                Console.Write(pos+ " ");
-            }
-            Console.WriteLine();
-        }
-
         public void CheckBoatCollisions(Position[] coordinates)
         {
             DisplayBoatPositions();
@@ -110,5 +100,15 @@
             }
 
         }
-     }
+
+        public void DisplayBoatPositions()
+        {
+            Console.Write("Boat positions : ");
+            foreach (Position pos in BoatPositions)
+            {
+                Console.Write(pos + " ");
+            }
+            Console.WriteLine();
+        }
+    }
 }
