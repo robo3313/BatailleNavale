@@ -27,7 +27,7 @@
                 CheckcoordinatesInMap(coordinates);
                 Boat b = new(name, type, coordinates);
 
-                boats.Add(b);
+                UserFleet.Add(b);
             }
             catch (Exception e)
             {
