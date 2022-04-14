@@ -8,3 +8,4 @@ Position impact1 = new('E', 3);
 g.AddImpact(impact1);
 
 g.Display();
+
