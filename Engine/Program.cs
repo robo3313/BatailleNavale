@@ -1,2 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Jeu;
+
+
+Engine e = new();
+
+e.AddBoat("Un", "Corvette", new string[] { "A1", "A2", "A3" });
+
+e.DisplayFleets();
+
+e.Attack(new Position('A', 1));
+e.Attack(new Position('A', 2));
+e.Attack(new Position('A', 3));
+
+e.DisplayFleets();

@@ -71,7 +71,7 @@ do
 {
     Console.WriteLine("écrire un message à envoyer");
     message = Console.ReadLine();
-    Connect("192.168.43.8", message);
-    Connect("192.168.43.8", "message2");
+    Connect("192.168.1.128", message);
+    Connect("192.168.1.128", "message2");
 } while (message.ToLower() != "stop");
 

@@ -1,6 +1,6 @@
 ﻿namespace Jeu
 {
-    public class Position
+    public class Position : IEquatable<Position>
     {
         public char Column { get; set; }
         public int Row { get; set; }
@@ -9,6 +9,19 @@
         {
             Column = column;
             Row = number;
+        }
+
+        public bool isNextTo(Position newPos)
+        {
+            if (newPos.Column != Column && newPos.Row != Row)
+            {
+                return false;
+            }
+            int colDiff = Math.Abs(newPos.Column - Column);
+            int rowDiff = Math.Abs(newPos.Row - Row);
+            if ((colDiff == 1 && rowDiff == 1) || (colDiff == 0 && rowDiff == 1))
+                return true;
+            return false;
         }
 
         // Traitement des coordonnées & cas d'erreurs
@@ -39,6 +52,32 @@
             return Column.ToString() + Row.ToString();
         }
 
+        static public bool operator ==(Position first, Position second)
+        {
+            if (first is null || second is null)
+            {
+                return false;
+            }
+            return first.Column == second.Column && first.Row == second.Row;
+        }
+
+        static public bool operator !=(Position first, Position second)
+        {
+            if (first is null || second is null)
+            {
+                return false;
+            }
+            return first.Column != second.Column || first.Row != second.Row;
+        }
+
+        public bool Equals(Position? p)
+        {
+            if (p is null)
+            {
+                return false;
+            }
+            return Column == p.Column && Row == p.Row;
+        }
     }
 }
  

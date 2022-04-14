@@ -80,10 +80,66 @@ namespace Jeu.BatailleNavaleGame
             RoleMenu roleMenu = new(prompt, options,Constants._LOGO);
             int selectedIndex = roleMenu.Run();
 
+            Grid grid = new Grid();
 
-
-            //WriteLine("Quel rôle souhaites-tu avoir dans ce jeu ?");
+            switch (selectedIndex)
+            {
+                case 0:
+                    DisplayGridAndFleet(grid, selectedIndex);
+                    break;
+                case 1:
+                    DisplayGridAndFleet(grid, selectedIndex);
+                    break;
+            }            
             ExitGame();
+        }
+
+        /// <summary>
+        /// méthode qui affiche la grille et la flotte
+        /// </summary>
+        /// <param name="grid">objet grille</param>
+        /// <param name="selectedIndex">l'index dans le tableau</param>
+        /// <param name="displayOthers">permet d'afficher des distinctions entre les grilles</param>
+        public void DisplayGridAndFleet(Grid grid, int selectedIndex, bool displayOthers = false)
+        {
+            Clear();
+            WriteLine(Constants._LOGO, ForegroundColor = ConsoleColor.Green);
+            ResetColor();
+
+            WriteLine("Veuillez patientez pendant le chargement de la grille.");
+
+            DisplayTimerMessage();
+
+            //Afficher la grille du joueur
+            int firstLineGrid;
+            grid.Display(out firstLineGrid);
+
+            //afficher la flotte
+            grid.DisplayFleet(firstLineGrid);
+            
+            //positionner la flotte
+        }
+
+        public void DisplayTimerMessage()
+        {
+            string str = "|";
+            for (int i = 0; i < 100; i++)
+            {
+                Write(str);
+                Thread.Sleep(20);
+            }
+            DeleteLineContent();
+        }
+
+        //supprime le contenu de la ligne dans la console
+        public void DeleteLineContent()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor - 1);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor);
         }
     }
 }

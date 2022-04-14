@@ -8,7 +8,7 @@
         public string Name;
         public string Type;
         public Dictionary<Position, bool> Positions;
-        public bool Alive = false;
+        public bool Alive = true;
 
         static public string[] Types = new string[] { "Frigate", "Galleon", "Battleship" };
 
@@ -34,26 +34,59 @@
 
             foreach (Position pos in positions)
             {
-                Positions.Add(pos, false);
+                Positions.Add(pos, true);
             }
         }
+
+        public int Attack(Position coordinates)
+        {
+            foreach (KeyValuePair<Position, bool> pos in Positions)
+            {
+                if (pos.Key == coordinates)
+                {
+                    Positions[pos.Key] = false;
+                    CheckDeath();
+                    return Alive ? 1 : 2;
+                }
+            }
+            return 0;
+        }
+
+        public void CheckDeath()
+        {
+            int i = 0;
+            foreach (KeyValuePair<Position, bool> pos in Positions)
+            {
+                if (!pos.Value){
+                    i++;
+                }
+            }
+            if (i == Positions.Count())
+            {
+                Alive = false;
+            }
+        }
+
         // affiche name and type of boat
         public void WriteInfo()
         {
-            Console.WriteLine("Mon nom est :{0}", Name);
-            Console.WriteLine("Mon type est : {0}", Type);
+            Console.WriteLine("     Nom: {0}, Type: {1}, Statut: {2}", Name, Type);
             if (Positions == null)
             {
                 return;
             }
             foreach(KeyValuePair<Position, bool> pair in Positions)
             {
-                Console.WriteLine("Ma position est : {0}  {1}", pair.Key.Column, pair.Key.Row);
+                Console.WriteLine("     Pos: {0}{1}, Alive: {2}", pair.Key.Column, pair.Key.Row, pair.Value);
             }
         }
         public override string ToString()
         {
-            string res = Name + Type + Positions;
+            string res = Name + " " + Type;
+            foreach (KeyValuePair<Position, bool> pos in Positions)
+            {
+                res += " " + pos.Key.ToString();
+            }
             return res;
         }
 
