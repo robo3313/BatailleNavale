@@ -1,6 +1,6 @@
 ﻿namespace Jeu
 {
-    class Grid
+    public class Grid
     {
         Dictionary<char, int> Case = new Dictionary<char, int>()
         {
