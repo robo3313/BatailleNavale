@@ -14,8 +14,8 @@
 
         public Fleet()
         {
+            UserFleet = new();
             BoatPositions = new();
-            UserFleet = new List<Boat>();
         }
 
         /// <summary>
@@ -25,6 +25,14 @@
         public Fleet(List<Boat> listboat)
         {
             UserFleet = listboat;
+            BoatPositions = new();
+            foreach (Boat b in listboat)
+            {
+                foreach (KeyValuePair<Position, bool> pos in b.Positions)
+                {
+                    BoatPositions.Add(pos.Key);
+                }
+            }
         }
 
         public void AddBoat(string name, string type, string[] newCoordinates)
@@ -34,6 +42,7 @@
                 Position[] coordinates = Position.createFromStringArray(newCoordinates);
                 CheckcoordinatesInMap(coordinates);
                 CheckBoatCollisions(coordinates);
+                CheckBoatContinuity(coordinates);
                 Boat b = new(name, type, coordinates);
 
                 UserFleet.Add(b);
@@ -41,6 +50,7 @@
                 {
                     BoatPositions.Add(pos);
                 }
+                Console.WriteLine("Added boat : " + b.ToString());
             }
             catch (Exception e)
             {
@@ -59,20 +69,46 @@
             }
         }
 
+        public void DisplayBoatPositions()
+        {
+            Console.Write("Boat positions : ");
+            foreach (Position pos in BoatPositions)
+            {
+                Console.Write(pos+ " ");
+            }
+            Console.WriteLine();
+        }
+
         public void CheckBoatCollisions(Position[] coordinates)
         {
-
+            DisplayBoatPositions();
             foreach (Position testedBoatPosition in coordinates)
             {
                 if (BoatPositions.Contains(testedBoatPosition))
                 {
-                    throw new Exception("Impossible de placer un bateau en " + testedBoatPosition);
+                    Console.WriteLine("Identified collision for position {0}", testedBoatPosition);
+                    throw new Exception("Collision en " + testedBoatPosition);
                 }
             }
         }
 
         public void CheckBoatContinuity(Position[] coordinates)
         {
+            Position? previousCoor = null;
+            foreach (Position coor in coordinates)
+            {
+                if (previousCoor is null)
+                {
+                    previousCoor = coor;
+                    continue;
+                }
+                if (!coor.isNextTo(previousCoor))
+                {
+                    throw new Exception("Bateau inconsistent "+previousCoor+" "+coor);
+                }
+                previousCoor = coor;
+            }
+
         }
      }
 }

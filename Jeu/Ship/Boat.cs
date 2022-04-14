@@ -53,7 +53,11 @@
         }
         public override string ToString()
         {
-            string res = Name + Type + Positions;
+            string res = Name + " " + Type;
+            foreach (KeyValuePair<Position, bool> pos in Positions)
+            {
+                res += " " + pos.Key.ToString();
+            }
             return res;
         }
 
