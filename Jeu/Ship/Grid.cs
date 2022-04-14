@@ -42,14 +42,16 @@
                 Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
             } 
         }
-        /*public void AddImpact()
+        public void AddImpact(Position p)
         {
-            int[] ComputerPos = GetComputerCoordinate(column.column, number.row);
-            G[ComputerPos[0], ComputerPos[1]] = 1;
+            Console.WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
 
-            Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
-        }*/
-          
+            int[] ComputerPos = GetComputerCoordinate(p.Column, p.Row);
+                G[ComputerPos[0], ComputerPos[1]] = 1;
+
+                Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
+        }
+
         public int[] GetComputerCoordinate(char column, int row)  // ex : col = D, row = 7
         {
             int[] res = new int[2];
