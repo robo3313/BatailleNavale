@@ -12,10 +12,10 @@ namespace Jeu.Menus
     /// </summary>
     public class InitialGameMenu
     {
-        private int SelectedIndex;
-        private string[] Options;
-        private string Prompt;
-        private string Logo;
+        public int SelectedIndex { get; set; }
+        public string[] Options { get; set; }
+        public string Prompt { get; set; }
+        public string Logo { get; set; }
 
         /// <summary>
         /// constructeur de la classe InitailGameMenu
@@ -23,7 +23,7 @@ namespace Jeu.Menus
         /// <param name="prompt">le texte d'accueil</param>
         /// <param name="logo">le logo</param>
         /// <param name="options">le tableau contenant les choix</param>
-        public InitialGameMenu(string prompt, string logo, string[] options)
+        public InitialGameMenu(string prompt, string[] options, string logo = "")
         {
             Prompt = prompt;
             Logo = logo;
@@ -33,7 +33,7 @@ namespace Jeu.Menus
         /// <summary>
         /// affiche les options du menu principal du jeu
         /// </summary>
-        private void DisplayOptions()
+        protected virtual void DisplayOptions()
         {
             //afficher le logo du jeu
             WriteLine(Logo, ForegroundColor = ConsoleColor.Green);

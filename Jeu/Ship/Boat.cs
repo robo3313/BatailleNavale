@@ -1,11 +1,14 @@
 ﻿namespace Jeu
 {
-    class Boat
+    /// <summary>
+    /// classe Boat
+    /// </summary>
+    public class Boat
     {
-        String Name;
-        String Type;
-        Dictionary<Position, bool> Positions;
-        bool Alive;
+        public string Name;
+        public string Type;
+        public Dictionary<Position, bool> Positions;
+        public bool Alive = false;
         
         public Boat(string name, string type, Position[] positions)
         {
@@ -27,8 +30,13 @@
            Console.WriteLine("Mon type est : {0}", Type);
            foreach(KeyValuePair<Position, bool> pair in Positions)
             {
-                Console.WriteLine("Ma position est : {0}  {1}", pair.Key, pair.Value);
+                Console.WriteLine("Ma position est : {0}  {1}", pair.Key.Column, pair.Key.Row);
             }
+        }
+        public override string ToString()
+        {
+            string res = Name + Type + Positions;
+            return res;
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace Jeu
 {
-    class Position
+    public class Position
     {
         public char Column { get; set; }
         public int Row { get; set; }
@@ -14,6 +14,7 @@
         // Traitement des coordonnées & cas d'erreurs
         public static Position createFromString(string columnRow)
         {
+            char letter = Char.ToUpper(columnRow[0]);
             int number;
             string str = columnRow.Substring(1);
             if (!Int32.TryParse(str, out number))
