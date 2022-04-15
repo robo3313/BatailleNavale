@@ -2,4 +2,11 @@
 
 Server server = new();
 
-server.Start();
+try
+{
+    server.WaitConnection();
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.ToString());
+}

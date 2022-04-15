@@ -34,53 +34,50 @@ namespace Network
             Console.WriteLine("Server initialized, ipAddress: {0}", ipAddress.MapToIPv4());
         }
 
-        public void Start()
+        public void WaitConnection()
         {
             // Bind the socket to the local endpoint and
             // listen for incoming connections.  
-            try
-            {
-                listener.Bind(localEndPoint);
-                listener.Listen(10);
 
-                // Start listening for connections.  
+            listener.Bind(localEndPoint);
+            listener.Listen(10);
+
+            // Start listening for connections.  
+            while (true)
+            {
+                Console.WriteLine("Server started, waiting for a connection...");
+                // Program is suspended while waiting for an incoming connection.  
+                Socket handler = listener.Accept();
+                data = null;
+
+                // An incoming connection needs to be processed.  
                 while (true)
                 {
-                    Console.WriteLine("Server started, waiting for a connection...");
-                    // Program is suspended while waiting for an incoming connection.  
-                    Socket handler = listener.Accept();
-                    data = null;
-
-                    // An incoming connection needs to be processed.  
-                    while (true)
+                    int bytesRec = handler.Receive(bytes);
+                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                    if (data.IndexOf("<EOF>") > -1)
                     {
-                        int bytesRec = handler.Receive(bytes);
-                        data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                        if (data.IndexOf("<EOF>") > -1)
-                        {
-                            break;
-                        }
+                        break;
                     }
-
-                    // Show the data on the console.  
-                    Console.WriteLine("Text received : {0}", data);
-
-                    // Echo the data back to the client.  
-                    byte[] msg = Encoding.ASCII.GetBytes(data);
-
-                    handler.Send(msg);
-                    handler.Shutdown(SocketShutdown.Both);
-                    handler.Close();
                 }
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+                // Show the data on the console.  
+                Console.WriteLine("Text received : {0}", data);
 
-            Console.WriteLine("\nPress ENTER to continue...");
-            Console.Read();
+                // Echo the data back to the client.  
+                byte[] msg = Encoding.ASCII.GetBytes(data);
+
+                handler.Send(msg);
+                handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
+            }
         }
+
+        public void sendMessage()
+        {
+
+        }
+
+
     }
 }
