@@ -1,8 +1,16 @@
 ﻿using Networking;
+using Jeu;
+using System.Text.Json;
 
 Client client = new();
 string str = null;
 string res = null;
+
+Fleet fleet1 = new();
+
+fleet1.AddBoat("Liquid", "US", Position.createFromStringArray(new string[] { "D1", "D2", "D3" }));
+
+NavalMessage nm = NavalMessage.CreateFromFleet(fleet1);
 
 try
 {
@@ -17,12 +25,12 @@ try
     while (res != "KO")
     {
         Console.WriteLine("Send message to Server :");
-        str = Console.ReadLine();
+        Console.ReadLine();
         if (str == "exit")
         {
             break;
         }
-        client.SendMessage(str);
+        client.SendMessage(nm);
         res = client.WaitResponse();
     }
     client.End();

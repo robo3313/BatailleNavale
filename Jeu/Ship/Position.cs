@@ -1,9 +1,13 @@
-﻿namespace Jeu
+﻿using System.Text.Json.Serialization;
+
+namespace Jeu
 {
     public class Position : IEquatable<Position>
     {
         public char Column { get; set; }
         public int Row { get; set; }
+
+        public Position() {}
 
         public Position(char column, int number)
         {

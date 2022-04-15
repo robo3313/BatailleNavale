@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
+using Jeu;
 
 namespace Network
 {
@@ -44,7 +46,8 @@ namespace Network
             int bytesRec = handler.Receive(bytes);
             res = Trim(Encoding.ASCII.GetString(bytes, 0, bytesRec));
             Console.WriteLine("Received Client message: {0}", res);
-            return res;
+            NavalMessage nm = JsonSerializer.Deserialize<NavalMessage>(res);
+            return nm.Content;
         }
 
         public int sendMessage(string message)
