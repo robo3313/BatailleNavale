@@ -1,13 +1,20 @@
 ﻿using Networking;
 
 Client client = new();
+string str = null;
+string res;
 
 try
 {
     client.Connect("192.168.1.128");
-    Console.WriteLine("Envoyer un message au serveur :");
-    string msg = Console.ReadLine();
-    client.SendMessage(msg);
+
+    while (str != "exit")
+    {
+        Console.WriteLine("Send message to Server :");
+        str = Console.ReadLine();
+        client.SendMessage(str);
+        res = client.WaitResponse();
+    }
     client.End();
 } catch (Exception e)
 {

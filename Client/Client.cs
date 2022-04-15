@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -9,19 +8,14 @@ namespace Networking
     {
         // Data buffer for incoming data.  
         byte[] bytes = new byte[1024];
-        IPHostEntry ipHostInfo;
-        IPAddress ipAddress;
-        IPEndPoint remoteEP;
-        Socket sender;
+        Socket? sender;
 
 
         public void Connect(string ip = "192.168.1.128")
         {
-            // Establish the remote endpoint for the socket.  
-            // This example uses port 11000 on the local computer.  
-            ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            ipAddress = IPAddress.Parse(ip);
-            remoteEP = new IPEndPoint(ipAddress, 11000);
+            // Establish the remote endpoint for the socket. This example uses port 11000 on the local computer.  
+            IPAddress ipAddress = IPAddress.Parse(ip);
+            IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
 
             // Create a TCP/IP  socket.  
             sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -29,25 +23,36 @@ namespace Networking
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
         }
 
-
-        public void SendMessage(string message)
+        public int SendMessage(string message)
         {
             // Encode the data string into a byte array.  
             byte[] msg = Encoding.ASCII.GetBytes(message+"<EOF>");
-
             // Send the data through the socket.  
-            int bytesSent = sender.Send(msg);
+            return sender.Send(msg);
+        }
 
+        public string WaitResponse()
+        {
+            string res;
+            int bytesRec;
+            
+            Console.WriteLine("Waiting for Server response...");
             // Receive the response from the remote device.  
-            int bytesRec = sender.Receive(bytes);
-            Console.WriteLine("Echoed test = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
+            bytesRec = sender.Receive(bytes);
+            res = Trim(Encoding.ASCII.GetString(bytes, 0, bytesRec));
+            Console.WriteLine("Received Server response: {0}", res);
+            return res;
+        }
 
+        private string Trim(string str)
+        {
+            return str.Remove(str.IndexOf("<EOF"));
         }
 
         public void End()
         {
             // Release the socket.  
-            sender.Shutdown(SocketShutdown.Both);
+            //sender.Shutdown(SocketShutdown.Both);
             sender.Close();
         }
 
