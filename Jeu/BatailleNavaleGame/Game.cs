@@ -13,7 +13,7 @@ namespace Jeu.BatailleNavaleGame
     /// </summary>
     public class Game
     {
-        Engine engine = new();   
+        internal Engine engine = new();          
         /// <summary>
         /// méthode de démarrage du jeu Bataille Navale
         /// </summary>
@@ -151,29 +151,51 @@ namespace Jeu.BatailleNavaleGame
 
         public void SelectBoatCoordinates()
         {
-            List<int> cursorposition =  GetCursorPosition();
-
+            int nbLigneMenu = 4; //titre + 3 types bateau (à modifier plus tard si évolution)
             string[] arrayBoatCoordinates;
 
-            //positionner la flotte
-            InitialGameMenu menuBoat = new("Choisis un bateau dans la liste", Boat.Types);
-            menuBoat.Run();
+            //ajouter 5 bateaux et afficher la grille avec les bateaux
+            for (int i = 0; i < 5; i++)
+            {
+                string strBoatName = "", strCoordinates = "";
+                //positionner la flotte
+                InitialGameMenu menuBoat = new("\nChoisis un bateau dans la liste", Boat.Types);
+                menuBoat.Run();
 
-            WriteLine("Donne un nom à ton bateau.");
-            string strBoatName = ReadLine();
+                List<int> cursorBefore = GetCursorPosition();   //récupère la position avant traitement
 
-            WriteLine("Ecris les coordonnées du bateau comme ceci A1,A2");
-            string strCoordinates = ReadLine();
+                WriteLine("Donne un nom à ton bateau.");
+                ForegroundColor = ConsoleColor.DarkCyan;
+                strBoatName = ReadLine();
+                ResetColor();
 
-            arrayBoatCoordinates = strCoordinates!.Split(',').ToArray();
+                WriteLine("Ecris les coordonnées du bateau comme ceci A1,A2");
+                ForegroundColor = ConsoleColor.DarkCyan;
+                strCoordinates = ReadLine();
+                ResetColor();
 
-            string boatType = menuBoat.Options[menuBoat.SelectedIndex];
+                arrayBoatCoordinates = strCoordinates!.Split(',').ToArray();
 
-            WriteLine("Tu vas positionner le bateau " + strBoatName + " de type " + boatType + " dans les case " + strCoordinates);
+                string boatType = menuBoat.Options[menuBoat.SelectedIndex];
 
-            engine.AddBoat(strBoatName!, boatType, arrayBoatCoordinates);
+                //WriteLine($"Tu vas positionner le bateau {strBoatName} de type {boatType} dans les cases {strCoordinates}");
 
-            engine.DisplayGrid();
+                engine.AddBoat(strBoatName!, boatType, arrayBoatCoordinates);   //ajoute un bateau
+
+                //derniere position
+                List<int> cursorposition = GetCursorPosition(); //récupère la position après traitement
+
+                for (int cur = cursorBefore[0] - nbLigneMenu; cur <= cursorposition[0]; cur++)
+                {
+                    SetCursorPosition(0, cur);
+                    Write(new String(' ', WindowWidth));    //on vide les lignes pour réafficher le menu et la grille
+                }
+
+                SetCursorPosition(0, cursorBefore[0]);
+
+                engine.DisplayGrid();
+                Read();
+            }
         }
 
         public void DisplayTimerMessage()
