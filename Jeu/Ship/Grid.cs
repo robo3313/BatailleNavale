@@ -32,7 +32,7 @@ namespace Jeu
             //int currentLineCursor = CursorLeft;
             SetCursorPosition(0 + decalage, CursorTop);
         
-            WriteLine(" A B C D E F G H I J");
+            WriteLine("  A B C D E F G H I J");
 
             for (int i = 0; i < G.GetLength(0); i++)
             {
@@ -40,11 +40,13 @@ namespace Jeu
 
                 SetCursorPosition(0 + decalage, CursorTop);
                 Write(i+1);
+                Write(" ");
                 for (int j = 0; j < G.GetLength(1); j++)
                 {
-                    Write(G[i,j]);
+                    //Write(G[i,j]);
 
                     Write(AddResult(G[i, j]));
+                    Write(" ");
                 }
                 WriteLine();
             }
@@ -88,7 +90,7 @@ namespace Jeu
         }
         public string AddResult(int param)
         {
-            switch(param)
+            switch (param)
             {
                 case 0:
                     return (" ");
@@ -107,7 +109,7 @@ namespace Jeu
             }
             return " ";
 
-         }
+        }
 
         public int[] GetComputerCoordinate(char column, int row)  // ex : col = D, row = 7
         {
