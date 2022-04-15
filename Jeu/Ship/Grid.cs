@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using Jeu.Menus;
+using static System.Console;
 
 namespace Jeu
 {
@@ -23,16 +24,15 @@ namespace Jeu
         /// <summary>
         /// Méthode qui affiche la grille
         /// </summary>
-        /// <param name="firstLineGrid">paramètre de sortie pour la première ligne de la grille</param>
-        public void Display(out int firstLineGrid)
+        /// <param name="firstLineGrid">paramètre pour la première ligne de la grille</param>
+        public void Display(int firstLineGrid = 30)
         {
             int decalage = 20;  //décalage affichage grille
-            firstLineGrid = CursorTop;
 
-            int currentLineCursor = CursorLeft;
+            //int currentLineCursor = CursorLeft;
             SetCursorPosition(0 + decalage, CursorTop);
         
-            WriteLine(" ABCDEFGHIJ");
+            WriteLine(" A B C D E F G H I J");
 
             for (int i = 0; i < G.GetLength(0); i++)
             {
@@ -56,10 +56,13 @@ namespace Jeu
         /// <param name="firstLineGrid">correspond à la première ligne de la grille</param>
         public void DisplayFleet(int firstLineGrid)
         {
-            int decalage = 50;  //décalage affichage flotte
-            SetCursorPosition(0 + decalage, firstLineGrid);
-            WriteLine("Place ta flotte sur la grille pour commencer.");
-            SetCursorPosition(0 + decalage, firstLineGrid + 1); //replace le curseur avec le décalage 
+            //int decalage = 50;  //décalage affichage flotte
+            SetCursorPosition(0, CursorTop - 1);
+            Write(new string(' ', WindowWidth));
+            Write("Place ta flotte sur la grille pour commencer.");
+            //SetCursorPosition(0 + decalage, firstLineGrid);
+            //WriteLine("Place ta flotte sur la grille pour commencer.");
+            //SetCursorPosition(0 + decalage, firstLineGrid + 1); //replace le curseur avec le décalage 
         }
         public void AddBoat(Boat b)
         {

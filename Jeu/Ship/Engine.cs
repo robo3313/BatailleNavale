@@ -134,8 +134,7 @@
 
         public void DisplayGrid()
         {
-            int tmp;
-            Grid.Display(out tmp);
+            Grid.Display();
         }
     }
 }

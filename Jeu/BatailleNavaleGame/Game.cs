@@ -13,6 +13,7 @@ namespace Jeu.BatailleNavaleGame
     /// </summary>
     public class Game
     {
+        Engine engine = new();   
         /// <summary>
         /// méthode de démarrage du jeu Bataille Navale
         /// </summary>
@@ -20,6 +21,11 @@ namespace Jeu.BatailleNavaleGame
         {
             Title = "Bataille Navale - The Game !";
             RunMainMenu();
+        }
+
+        public Game()
+        {
+
         }
 
         /// <summary>
@@ -86,6 +92,7 @@ namespace Jeu.BatailleNavaleGame
             {
                 case 0:
                     DisplayGridAndFleet(grid, selectedIndex);
+                    SelectBoatCoordinates();
                     break;
                 case 1:
                     DisplayGridAndFleet(grid, selectedIndex);
@@ -111,21 +118,68 @@ namespace Jeu.BatailleNavaleGame
             DisplayTimerMessage();
 
             //Afficher la grille du joueur
-            int firstLineGrid;
-            grid.Display(out firstLineGrid);
+            int firstLineGrid = CursorTop;
+            grid.Display(firstLineGrid);
+
+            ConsoleKey keyPressed;
+            do
+            {
+                WriteLine("\nAppuie sur entrée pour choisir ton bateau");
+                ConsoleKeyInfo keyInfo = ReadKey(true);
+                keyPressed = keyInfo.Key;
+            } while (keyPressed != ConsoleKey.Enter);
 
             //afficher la flotte
             grid.DisplayFleet(firstLineGrid);
+        }
+
+        /// <summary>
+        /// récupère les coordonnées du curseur
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetCursorPosition()
+        {
+            List<int> result = new();
+            int top = CursorTop;
+            int left = CursorLeft;
+            
+            result.Add(top);
+            result.Add(left);
+
+            return result;
+        }
+
+        public void SelectBoatCoordinates()
+        {
+            List<int> cursorposition =  GetCursorPosition();
+
+            string[] arrayBoatCoordinates;
 
             //positionner la flotte
             InitialGameMenu menuBoat = new("Choisis un bateau dans la liste", Boat.Types);
-            menuBoat.Run(false);
+            menuBoat.Run();
+
+            WriteLine("Donne un nom à ton bateau.");
+            string strBoatName = ReadLine();
+
+            WriteLine("Ecris les coordonnées du bateau comme ceci A1,A2");
+            string strCoordinates = ReadLine();
+
+            arrayBoatCoordinates = strCoordinates!.Split(',').ToArray();
+
+            string boatType = menuBoat.Options[menuBoat.SelectedIndex];
+
+            WriteLine("Tu vas positionner le bateau " + strBoatName + " de type " + boatType + " dans les case " + strCoordinates);
+
+            engine.AddBoat(strBoatName!, boatType, arrayBoatCoordinates);
+
+            engine.DisplayGrid();
         }
 
         public void DisplayTimerMessage()
         {
             string str = "|";
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
                 Write(str);
                 Thread.Sleep(20);
