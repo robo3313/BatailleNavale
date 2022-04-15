@@ -2,16 +2,26 @@
 
 Client client = new();
 string str = null;
-string res;
+string res = null;
 
 try
 {
-    client.Connect("192.168.1.128");
+    Console.WriteLine("Enter the Server IP Address:");
+    str = Console.ReadLine();
+    if (str == "")
+    {
+        str = "192.168.1.128";
+    }
+    client.Connect(str);
 
-    while (str != "exit")
+    while (res != "KO")
     {
         Console.WriteLine("Send message to Server :");
         str = Console.ReadLine();
+        if (str == "exit")
+        {
+            break;
+        }
         client.SendMessage(str);
         res = client.WaitResponse();
     }

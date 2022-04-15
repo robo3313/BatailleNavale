@@ -7,15 +7,24 @@ string res;
 
 try
 {
-    server.WaitConnection();
-    Console.WriteLine("New Client connection !");
     while (true)
     {
-        res = server.WaitMessage();
-        Console.WriteLine("Send message to Client :");
-        str = Console.ReadLine();
-        server.sendMessage(str);
+        server.WaitConnection();
+        Console.WriteLine("New Client connection !");
+        while (true)
+        {
+            res = server.WaitMessage();
+            if (res == "EXIT")
+            {
+                break;
+            }
+            Console.WriteLine("Send message to Client :");
+            str = Console.ReadLine();
+            server.sendMessage(str);
 
+        }
+        Console.WriteLine("Client left...");
+        server.End();
     }
 }
 catch (Exception e)

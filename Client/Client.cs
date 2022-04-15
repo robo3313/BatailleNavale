@@ -53,6 +53,7 @@ namespace Networking
         {
             // Release the socket.  
             //sender.Shutdown(SocketShutdown.Both);
+            sender.Send(Encoding.ASCII.GetBytes("EXIT<EOF>"));
             sender.Close();
         }
 

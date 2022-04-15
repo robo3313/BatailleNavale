@@ -22,46 +22,18 @@ namespace Network
 
             // Create a TCP/IP socket.  
             listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            // Bind the socket to the local endpoint and
+            // listen for incoming connections.  
+            listener.Bind(localEndPoint);
+            listener.Listen(10);
             Console.WriteLine("Server initialized, ipAddress: {0}", ipAddress.MapToIPv4());
         }
 
         public void WaitConnection()
         {
-            // Data buffer for incoming data.  
-            string str;
-
-            // Bind the socket to the local endpoint and
-            // listen for incoming connections.  
-
-            listener.Bind(localEndPoint);
-            listener.Listen(10);
-            Console.WriteLine("Server started, waiting for a connection...");
+            Console.WriteLine("Waiting for a connection...");
             // Program is suspended while waiting for an incoming connection.  
             handler = listener.Accept();
-
-            // Start listening for connections.  
-            /*while (true)
-            {
-                data = null;
-                // An incoming connection needs to be processed.  
-                while (true)
-                {
-                    int bytesRec = handler.Receive(bytes);
-                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    if (data.IndexOf("<EOF>") > -1)
-                    {
-                        break;
-                    }
-                }
-
-                // Show the data on the console.  
-                Console.WriteLine("Text received : {0}", data);
-                Console.WriteLine("Envoyer un message au client :");
-                str = Console.ReadLine();
-                // Echo the data back to the client.  
-                byte[] msg = Encoding.ASCII.GetBytes(str+"<EOF>");
-                handler.Send(msg);
-            }*/
         }
         public string WaitMessage()
         {
@@ -85,12 +57,12 @@ namespace Network
 
         private string Trim(string str)
         {
-            return str.Remove(str.IndexOf("<EOF"));
+            return str.Remove(str.IndexOf("<EOF>"));
         }
 
         public void End()
         {
-            handler.Shutdown(SocketShutdown.Both);
+            //handler.Shutdown(SocketShutdown.Both);
             handler.Close();
         }
 
