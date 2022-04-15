@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
+using Jeu.BatailleNavaleGame;
 
 namespace Jeu.Menus
 {
@@ -30,6 +31,7 @@ namespace Jeu.Menus
             Options = options;
             SelectedIndex = 0;
         }
+
         /// <summary>
         /// affiche les options du menu principal du jeu
         /// </summary>
@@ -89,7 +91,7 @@ namespace Jeu.Menus
                 ResetColor();
                 
                 //if (!initial) decalage = 50;
-
+                
                 DisplayOptions(decalage);
 
                 ConsoleKeyInfo keyInfo = ReadKey(true);
