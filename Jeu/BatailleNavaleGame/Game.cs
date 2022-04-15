@@ -166,7 +166,11 @@ namespace Jeu.BatailleNavaleGame
 
                 WriteLine("Donne un nom à ton bateau.");
                 ForegroundColor = ConsoleColor.DarkCyan;
-                strBoatName = ReadLine();
+                do
+                {
+                    strBoatName = ReadLine();
+                } while (strBoatName == "");
+                
                 ResetColor();
 
                 WriteLine("Ecris les coordonnées du bateau comme ceci A1,A2");
