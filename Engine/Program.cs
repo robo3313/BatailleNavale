@@ -3,7 +3,7 @@
 
 Engine e = new();
 
-e.AddBoat("Un", "Corvette", new string[] { "C5", "C6", "C7" });
+e.AddBoat("Un", "Corvette", new string[] { "B1", "C1", "D1" });
 
 e.DisplayFleets();
 

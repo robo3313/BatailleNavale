@@ -23,7 +23,7 @@ namespace Jeu
             }
             int colDiff = Math.Abs(newPos.Column - Column);
             int rowDiff = Math.Abs(newPos.Row - Row);
-            if ((colDiff == 1 && rowDiff == 1) || (colDiff == 0 && rowDiff == 1))
+            if ((colDiff == 1 && rowDiff == 0) || (colDiff == 0 && rowDiff == 1))
                 return true;
             return false;
         }
