@@ -1,4 +1,7 @@
-﻿namespace Jeu
+﻿using Jeu.Menus;
+using static System.Console;
+
+namespace Jeu
 {
     public class Grid
     {
@@ -21,28 +24,29 @@
         /// <summary>
         /// Méthode qui affiche la grille
         /// </summary>
-        /// <param name="firstLineGrid">paramètre de sortie pour la première ligne de la grille</param>
-        public void Display(out int firstLineGrid)
+        /// <param name="firstLineGrid">paramètre pour la première ligne de la grille</param>
+        public void Display(int firstLineGrid = 30)
         {
             int decalage = 20;  //décalage affichage grille
-            firstLineGrid = Console.CursorTop;
 
-            int currentLineCursor = Console.CursorLeft;
-            Console.SetCursorPosition(0 + decalage, Console.CursorTop);
+            //int currentLineCursor = CursorLeft;
+            SetCursorPosition(0 + decalage, CursorTop);
         
-            Console.WriteLine(" ABCDEFGHIJ");
+            WriteLine(" A B C D E F G H I J");
 
             for (int i = 0; i < G.GetLength(0); i++)
             {
                 if (i == 9) decalage -= 1;  //aligne les coordonnées verticales
 
-                Console.SetCursorPosition(0 + decalage, Console.CursorTop);
-                Console.Write(i+1);
+                SetCursorPosition(0 + decalage, CursorTop);
+                Write(i+1);
                 for (int j = 0; j < G.GetLength(1); j++)
                 {
-                    Console.Write(AddResult(G[i, j]));
+                    Write(G[i,j]);
+
+                    Write(AddResult(G[i, j]));
                 }
-                Console.WriteLine();
+                WriteLine();
             }
         }
 
@@ -52,31 +56,35 @@
         /// <param name="firstLineGrid">correspond à la première ligne de la grille</param>
         public void DisplayFleet(int firstLineGrid)
         {
-            int decalage = 50;  //décalage affichage flotte
-            Console.SetCursorPosition(0 + decalage, firstLineGrid);
-            Console.WriteLine("Placer votre flotte sur la grille");
-            Console.SetCursorPosition(0 + decalage, firstLineGrid + 1); //replace le curseur avec le décalage 
+            //int decalage = 50;  //décalage affichage flotte
+            SetCursorPosition(0, CursorTop - 1);
+            Write(new string(' ', WindowWidth));
+            Write("Place ta flotte sur la grille pour commencer.");
+            //SetCursorPosition(0 + decalage, firstLineGrid);
+            //WriteLine("Place ta flotte sur la grille pour commencer.");
+            //SetCursorPosition(0 + decalage, firstLineGrid + 1); //replace le curseur avec le décalage 
         }
         public void AddBoat(Boat b)
         {
             foreach (KeyValuePair<Position, bool> pair in b.Positions)
             {
-                Console.WriteLine("Ma position humaine est : {0}  {1}", pair.Key, pair.Value);
+                WriteLine("Ma position humaine est : {0}  {1}", pair.Key, pair.Value);
 
                 int[] ComputerPos = GetComputerCoordinate(pair.Key.Column, pair.Key.Row);
                 G[ComputerPos[0], ComputerPos[1]] = 2;
 
-                Console.WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
+                WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
             }
         }
         public void AddImpact(Position p)
         {
-            Console.WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
+            WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
 
             int[] ComputerPos = GetComputerCoordinate(p.Column, p.Row);
             G[ComputerPos[0], ComputerPos[1]] += 1;
 
             Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
+
         }
         public string AddResult(int param)
         {

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+﻿using static System.Console;
 
 namespace Jeu
 {
@@ -47,11 +48,11 @@ namespace Jeu
                 {
                     BoatPositions.Add(pos);
                 }
-                Console.WriteLine("Added boat : " + b.ToString());
+                WriteLine("Added boat : " + b.ToString());
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
+                WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
             }
         }
 
@@ -69,6 +70,16 @@ namespace Jeu
             return null;
         }
 
+        public void DisplayBoatPositions()
+        {
+            Write("Boat positions : ");
+            foreach (Position pos in BoatPositions)
+            {
+                Write(pos+ " ");
+            }
+            WriteLine();
+        }
+
         public void Display()
         {
             foreach (Boat b in UserFleet)
@@ -77,14 +88,5 @@ namespace Jeu
             }
         }
 
-        public void DisplayBoatPositions()
-        {
-            Console.Write("Boat positions : ");
-            foreach (Position pos in BoatPositions)
-            {
-                Console.Write(pos + " ");
-            }
-            Console.WriteLine();
-        }
     }
 }

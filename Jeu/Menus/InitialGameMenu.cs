@@ -33,11 +33,16 @@ namespace Jeu.Menus
         /// <summary>
         /// affiche les options du menu principal du jeu
         /// </summary>
-        protected virtual void DisplayOptions()
+        /// <param name="decalage">indice de décalage du curseur pour l'affichage</param>
+        protected virtual void DisplayOptions(int decalage = 0)
         {
             //afficher le logo du jeu
-            WriteLine(Logo, ForegroundColor = ConsoleColor.Green);
-            ResetColor();
+            if(decalage==0)
+            {
+                WriteLine(Constants._LOGO, ForegroundColor = ConsoleColor.Green);
+                ResetColor();
+            }
+
             //affiche et formate les instructions du menu principal au début de l'application
             WriteLine(Prompt);
 
@@ -59,6 +64,8 @@ namespace Jeu.Menus
                     BackgroundColor = ConsoleColor.Black;
                 }
 
+                SetCursorPosition(decalage, CursorTop);
+
                 WriteLine($"{prefix} << {currentOption} >>");
             }
             ResetColor();
@@ -67,14 +74,23 @@ namespace Jeu.Menus
         /// <summary>
         /// lancement du jeu
         /// </summary>
-        /// <returns></returns>
-        public int Run()
+        /// <param name="initial">indique s'il s'agit du menu initial ou en cours de jeu</param>
+        public int Run(bool initial = true)
         {
+            int decalage = 0;
             ConsoleKey keyPressed;
             do
             {
                 Clear();
-                DisplayOptions();
+                //if (!initial)
+                //{
+                //    WriteLine(Constants._LOGO,ForegroundColor = ConsoleColor.Green);
+                //}
+                ResetColor();
+                
+                //if (!initial) decalage = 50;
+
+                DisplayOptions(decalage);
 
                 ConsoleKeyInfo keyInfo = ReadKey(true);
                 keyPressed = keyInfo.Key;
@@ -95,6 +111,7 @@ namespace Jeu.Menus
             } while (keyPressed != ConsoleKey.Enter);
 
             return SelectedIndex;
+
         }
     }
 }
