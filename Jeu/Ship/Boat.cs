@@ -1,3 +1,4 @@
+﻿using System.Text.Json.Serialization;
 ﻿using static System.Console;
 
 namespace Jeu
@@ -11,6 +12,8 @@ namespace Jeu
         public string Type;
         public Dictionary<Position, bool> Positions;
         public bool Alive = true;
+
+        public Boat() {}
 
         public static string[] Types = new string[] { "Frigate", "Galleon", "Battleship" };
 

@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
+using Jeu;
 
 namespace Networking
 {
@@ -23,10 +25,11 @@ namespace Networking
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
         }
 
-        public int SendMessage(string message)
+        public int SendMessage(NavalMessage nm)
         {
-            // Encode the data string into a byte array.  
-            byte[] msg = Encoding.ASCII.GetBytes(message+"<EOF>");
+            // Encode the data string into a byte array.
+            string jsonString = JsonSerializer.Serialize(nm);
+            byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
             // Send the data through the socket.  
             return sender.Send(msg);
         }

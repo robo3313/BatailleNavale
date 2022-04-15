@@ -1,3 +1,5 @@
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 ﻿using static System.Console;
 
 namespace Jeu
@@ -11,8 +13,7 @@ namespace Jeu
         /// propriété UserFleet qui est une liste d'objet Boat
         /// </summary>
         public List<Boat> UserFleet { get; set; }
-        public List<Position> BoatPositions;
-
+        public List<Position> BoatPositions { get; set; }
 
         public Fleet()
         {
