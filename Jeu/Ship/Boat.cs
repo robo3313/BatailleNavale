@@ -8,9 +8,13 @@ namespace Jeu
     /// </summary>
     public class Boat
     {
+        [JsonInclude]
         public string Name;
+        [JsonInclude]
         public string Type;
+        [JsonInclude]
         public Dictionary<Position, bool> Positions;
+        [JsonInclude]
         public bool Alive = true;
 
         public Boat() {}
@@ -40,6 +44,17 @@ namespace Jeu
             foreach (Position pos in positions)
             {
                 Positions.Add(pos, true);
+            }
+        }
+
+        public Boat(SerialBoat b)
+        {
+            Name = b.Name;
+            Type = b.Type;
+            Positions = new();
+            foreach (KeyValuePair<string, bool> pos in b.Positions)
+            {
+                Positions.Add(Position.createFromString(pos.Key), pos.Value);
             }
         }
 

@@ -7,16 +7,25 @@ namespace Jeu
     {
         public int Type { get; set; }
         public string? Content { get; set; }
-        public Fleet? Fleet { get; set; }
+        [JsonInclude]
+        public SerialFleet? Fleet { get; set; }
+        [JsonInclude]
         public Position? Position { get; set; }
 
         public NavalMessage() {}
+
+        static public NavalMessage CreateFromError()
+        {
+            NavalMessage res = new();
+            res.Type = 0;
+            return res;
+        }
 
         static public NavalMessage CreateFromFleet(Fleet fleet)
         {
             NavalMessage res = new();
             res.Type = 2;
-            res.Fleet = fleet;
+            res.Fleet = new(fleet);
             return res;
         }
 

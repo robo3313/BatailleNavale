@@ -127,6 +127,15 @@
             Console.WriteLine();
         }
 
+        public void setFleet(Fleet fl)
+        {
+            Fleet1 = fl;
+            foreach (Boat b in fl.UserFleet)
+            {
+                Grid.AddBoat(b);
+            }
+        }
+
         public void DisplayFleets()
         {
             Fleet1.Display();

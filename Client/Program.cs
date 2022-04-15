@@ -3,14 +3,11 @@ using Jeu;
 using System.Text.Json;
 
 Client client = new();
+Engine engine = new();
 string str = null;
 string res = null;
 
-Fleet fleet1 = new();
-
-fleet1.AddBoat("Liquid", "US", Position.createFromStringArray(new string[] { "D1", "D2", "D3" }));
-
-NavalMessage nm = NavalMessage.CreateFromFleet(fleet1);
+NavalMessage nm = NavalMessage.CreateFromFleet(engine.Fleet1);
 
 try
 {
@@ -22,14 +19,18 @@ try
     }
     client.Connect(str);
 
-    while (res != "KO")
+    Console.WriteLine("Placez un bateau");
+    string input = Console.ReadLine();
+    string[] tmp = input.Split(" ");
+
+    engine.AddBoat(tmp[0], tmp[1], tmp[2].Split(","));
+
+
+    while (nm.Type != 0)
     {
         Console.WriteLine("Send message to Server :");
         Console.ReadLine();
-        if (str == "exit")
-        {
-            break;
-        }
+        nm = NavalMessage.CreateFromFleet(engine.Fleet1);
         client.SendMessage(nm);
         res = client.WaitResponse();
     }

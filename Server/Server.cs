@@ -37,7 +37,7 @@ namespace Network
             // Program is suspended while waiting for an incoming connection.  
             handler = listener.Accept();
         }
-        public string WaitMessage()
+        public NavalMessage WaitMessage()
         {
             byte[] bytes = new Byte[1024];
             string res;
@@ -46,8 +46,7 @@ namespace Network
             int bytesRec = handler.Receive(bytes);
             res = Trim(Encoding.ASCII.GetString(bytes, 0, bytesRec));
             Console.WriteLine("Received Client message: {0}", res);
-            NavalMessage nm = JsonSerializer.Deserialize<NavalMessage>(res);
-            return nm.Content;
+            return JsonSerializer.Deserialize<NavalMessage>(res) ?? NavalMessage.CreateFromError();
         }
 
         public int sendMessage(string message)

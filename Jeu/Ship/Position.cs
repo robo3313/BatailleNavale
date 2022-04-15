@@ -4,7 +4,9 @@ namespace Jeu
 {
     public class Position : IEquatable<Position>
     {
+        [JsonInclude]
         public char Column { get; set; }
+        [JsonInclude]
         public int Row { get; set; }
 
         public Position() {}
