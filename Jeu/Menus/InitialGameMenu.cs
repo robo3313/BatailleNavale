@@ -82,13 +82,13 @@ namespace Jeu.Menus
             do
             {
                 Clear();
-                if (!initial)
-                {
-                    WriteLine(Constants._LOGO,ForegroundColor = ConsoleColor.Green);
-                }
+                //if (!initial)
+                //{
+                //    WriteLine(Constants._LOGO,ForegroundColor = ConsoleColor.Green);
+                //}
                 ResetColor();
                 
-                if (!initial) decalage = 50;
+                //if (!initial) decalage = 50;
 
                 DisplayOptions(decalage);
 
