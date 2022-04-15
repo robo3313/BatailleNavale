@@ -7,7 +7,7 @@
 
         public Position(char column, int number)
         {
-            Column = column;
+            Column = Char.ToUpper(column);
             Row = number;
         }
 
