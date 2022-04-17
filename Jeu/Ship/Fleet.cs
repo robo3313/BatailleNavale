@@ -59,7 +59,6 @@ namespace Jeu
                 {
                     BoatPositions.Add(pos);
                 }
-                WriteLine("Added boat : " + b.ToString());
             }
             catch (Exception e)
             {
@@ -79,6 +78,16 @@ namespace Jeu
                 }
             }
             return null;
+        }
+
+        public int CountAliveBoats()
+        {
+            int res = 0;
+            foreach (Boat b in UserFleet)
+            {
+                res += b.Alive ? 1 : 0;
+            }
+            return res;
         }
 
         public void DisplayBoatPositions()

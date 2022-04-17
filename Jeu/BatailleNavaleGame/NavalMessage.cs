@@ -17,7 +17,7 @@ namespace Jeu
         static public NavalMessage CreateFromError()
         {
             NavalMessage res = new();
-            res.Type = 0;
+            res.Type = -1;
             return res;
         }
 
@@ -29,11 +29,11 @@ namespace Jeu
             return res;
         }
 
-        static public NavalMessage CreateFromAttack(Position position)
+        static public NavalMessage CreateFromAttack(Position pos)
         {
             NavalMessage res = new();
             res.Type = 3;
-            res.Position = position;
+            res.Position = pos;
             return res;
         }
     }

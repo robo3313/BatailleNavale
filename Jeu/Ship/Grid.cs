@@ -70,22 +70,18 @@ namespace Jeu
         {
             foreach (KeyValuePair<Position, bool> pair in b.Positions)
             {
-                WriteLine("Ma position humaine est : {0}  {1}", pair.Key, pair.Value);
-
                 int[] ComputerPos = GetComputerCoordinate(pair.Key.Column, pair.Key.Row);
                 G[ComputerPos[0], ComputerPos[1]] = 2;
-
-                WriteLine("Ma position ordinateur est : {0} {1}", ComputerPos[0], ComputerPos[1]);
             }
         }
         public void AddImpact(Position p)
         {
-            WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
+            //WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
 
             int[] ComputerPos = GetComputerCoordinate(p.Column, p.Row);
             G[ComputerPos[0], ComputerPos[1]] += 1;
 
-            Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
+            //Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
 
         }
         public string AddResult(int param)

@@ -173,7 +173,7 @@ namespace Jeu.BatailleNavaleGame
 
             engine.AddBoat(strBoatName!, boatType, arrayBoatCoordinates);
 
-            engine.DisplayGrid();
+            engine.DisplayGrids();
         }
 
         public void DisplayTimerMessage()
