@@ -1,33 +1,27 @@
 ﻿using Network;
+using Jeu;
 
 Server server = new();
-string str;
-string res;
+int gameState = 0;
 
-
-try
+while (true)
 {
-    while (true)
+    try
     {
         server.WaitConnection();
-        Console.WriteLine("New Client connection !");
-        while (true)
+        server.setupFleet();
+        //Waiting for a player
+        server.WaitResponse();
+        server.HandleResponse();
+        server.SendFleet();
+        while (server.WaitResponse() && gameState != 2)
         {
-            res = server.WaitMessage();
-            if (res == "EXIT")
-            {
-                break;
-            }
-            Console.WriteLine("Send message to Client :");
-            str = Console.ReadLine();
-            server.sendMessage(str);
-
+            server.HandleResponse();
+            server.Attack();
         }
-        Console.WriteLine("Client left...");
-        server.End();
     }
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.ToString());
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
 }

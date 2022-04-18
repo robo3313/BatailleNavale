@@ -12,6 +12,7 @@ namespace Jeu
         /// <summary>
         /// propriété UserFleet qui est une liste d'objet Boat
         /// </summary>
+        [JsonInclude]
         public List<Boat> UserFleet { get; set; }
         public List<Position> BoatPositions { get; set; }
 
@@ -38,6 +39,16 @@ namespace Jeu
             }
         }
 
+        public Fleet(SerialFleet fl)
+        {
+            UserFleet = new();
+            foreach (SerialBoat b in fl.UserFleet)
+            {
+                UserFleet.Add(new Boat(b));
+            }
+            BoatPositions = fl.BoatPositions;
+        }
+
         public void AddBoat(string name, string type, Position[] coordinates)
         {
             try
@@ -48,7 +59,6 @@ namespace Jeu
                 {
                     BoatPositions.Add(pos);
                 }
-                WriteLine("Added boat : " + b.ToString());
             }
             catch (Exception e)
             {
@@ -68,6 +78,16 @@ namespace Jeu
                 }
             }
             return null;
+        }
+
+        public int CountAliveBoats()
+        {
+            int res = 0;
+            foreach (Boat b in UserFleet)
+            {
+                res += b.Alive ? 1 : 0;
+            }
+            return res;
         }
 
         public void DisplayBoatPositions()

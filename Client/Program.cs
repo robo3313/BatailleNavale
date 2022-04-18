@@ -1,40 +1,39 @@
 ﻿using Networking;
-using Jeu;
-using System.Text.Json;
 
 Client client = new();
-string str = null;
-string res = null;
+bool connected = false;
 
-Fleet fleet1 = new();
-
-fleet1.AddBoat("Liquid", "US", Position.createFromStringArray(new string[] { "D1", "D2", "D3" }));
-
-NavalMessage nm = NavalMessage.CreateFromFleet(fleet1);
+while (connected == false)
+{
+    try
+    {
+        Console.WriteLine("Enter the Server IP Address:");
+        client.Connect(Console.ReadLine());
+        connected = true;
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
 
 try
 {
-    Console.WriteLine("Enter the Server IP Address:");
-    str = Console.ReadLine();
-    if (str == "")
-    {
-        str = "192.168.1.128";
-    }
-    client.Connect(str);
+    client.setupFleet();
+    //Ask to build Fleet here
+    client.SendFleet();
+    client.WaitResponse();
+    client.HandleResponse();
+    client.Attack();
 
-    while (res != "KO")
+    while (client.WaitResponse())
     {
-        Console.WriteLine("Send message to Server :");
-        Console.ReadLine();
-        if (str == "exit")
-        {
-            break;
-        }
-        client.SendMessage(nm);
-        res = client.WaitResponse();
+        client.HandleResponse();
+        client.Attack();
     }
-    client.End();
-} catch (Exception e)
+    //client.End();
+}
+catch (Exception e)
 {
-    Console.WriteLine("Error : "+e.ToString());
+    Console.WriteLine(e.Message);
 }
