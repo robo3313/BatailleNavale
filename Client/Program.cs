@@ -1,11 +1,25 @@
 ﻿using Networking;
 
 Client client = new();
+bool connected = false;
+
+while (connected == false)
+{
+    try
+    {
+        Console.WriteLine("Enter the Server IP Address:");
+        client.Connect(Console.ReadLine());
+        connected = true;
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
 
 try
 {
-    //Console.WriteLine("Enter the Server IP Address:");
-    client.Connect("127.0.0.1");
+    client.setupFleet();
     //Ask to build Fleet here
     client.SendFleet();
     client.WaitResponse();

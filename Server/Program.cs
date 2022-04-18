@@ -2,17 +2,19 @@
 using Jeu;
 
 Server server = new();
+int gameState = 0;
 
 while (true)
 {
     try
     {
-        //Waiting for a player
         server.WaitConnection();
+        server.setupFleet();
+        //Waiting for a player
         server.WaitResponse();
         server.HandleResponse();
         server.SendFleet();
-        while (server.WaitResponse())
+        while (server.WaitResponse() && gameState != 2)
         {
             server.HandleResponse();
             server.Attack();
@@ -22,5 +24,4 @@ while (true)
     {
         Console.WriteLine(e.Message);
     }
-    //server.End();
 }

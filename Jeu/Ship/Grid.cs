@@ -52,6 +52,30 @@ namespace Jeu
             }
         }
 
+        public string getRowDisplay(int row)
+        {
+            string str = "";
+            //Console.WriteLine("Row #{0}, Length0 = {1}, Length1 = {2}", row, G.GetLength(0), G.GetLength(1));
+            for (int i = 0; i < G.GetLength(1); i++)
+            {
+                //Console.WriteLine("index : {0}", i);
+                str += AddResult(G[row, i]) + " ";
+            }
+            return str;
+        }
+
+        public string getHiddenRowDisplay(int row)
+        {
+            string str = "";
+            //Console.WriteLine("Row #{0}, Length0 = {1}, Length1 = {2}", row, G.GetLength(0), G.GetLength(1));
+            for (int i = 0; i < G.GetLength(1); i++)
+            {
+                //Console.WriteLine("index : {0}", i);
+                str += AddResult(G[row, i] != 2 ? G[row, i] : 0) + " ";
+            }
+            return str;
+        }
+
         /// <summary>
         /// Méthode qui affiche la flotte à côté de la grille
         /// </summary>

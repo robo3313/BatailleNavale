@@ -38,7 +38,7 @@ namespace Jeu
             string str = columnRow.Substring(1);
             if (!Int32.TryParse(str, out number))
             {
-                throw new Exception("Impossible d'utiliser la coordonnée "+ str);
+                throw new ErrorException("Impossible d'utiliser la coordonnée "+ str);
             }
             return new Position(columnRow[0], number);
         }

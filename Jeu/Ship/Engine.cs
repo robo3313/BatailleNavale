@@ -25,9 +25,6 @@
         {
             try
             {
-                /*CheckAttackInMap(coordinates);
-                CheckAlreadyAttacked(coordinates);
-                ReceivedAttackPositions.Add(coordinates);*/
                 MyGrid.AddImpact(coordinates);
                 //Console.WriteLine("Attaque: {0}", coordinates.ToString());
                 Boat? hit = MyFleet.Attack(coordinates);
@@ -53,30 +50,23 @@
 
         public int Attack(Position coordinates)
         {
-            try
+            CheckAttackInMap(coordinates);
+            CheckAlreadyAttacked(coordinates);
+            SentAttackPositions.Add(coordinates);
+            EnemyGrid.AddImpact(coordinates);
+            //Console.WriteLine("Attaque: {0}", coordinates.ToString());
+            Boat? hit = EnemyFleet.Attack(coordinates);
+            if (hit is not null)
             {
-                CheckAttackInMap(coordinates);
-                CheckAlreadyAttacked(coordinates);
-                SentAttackPositions.Add(coordinates);
-                EnemyGrid.AddImpact(coordinates);
-                //Console.WriteLine("Attaque: {0}", coordinates.ToString());
-                Boat? hit = EnemyFleet.Attack(coordinates);
-                if (hit is not null)
+                if (!hit.Alive)
                 {
-                    if (!hit.Alive)
+                    foreach (KeyValuePair<Position, bool> pos in hit.Positions)
                     {
-                        foreach (KeyValuePair<Position, bool> pos in hit.Positions)
-                        {
-                            EnemyGrid.AddImpact(pos.Key);
-                        }
-                        return EnemyFleet.CountAliveBoats() == 0 ? 2 : 1;
+                        EnemyGrid.AddImpact(pos.Key);
                     }
-                    return 1;
+                    return EnemyFleet.CountAliveBoats() == 0 ? 2 : 1;
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Erreur lors de l'attaque : {0}", e.Message);
+                return 1;
             }
             return 0;
         }
@@ -87,7 +77,7 @@
             {
                 if (pos.Column < 'A' || pos.Column > 'J' || pos.Row < 1 || pos.Row > 10)
                 {
-                    throw new Exception("Impossible de placer un bateau en " + pos.ToString());
+                    throw new ErrorException("Impossible de placer un bateau en " + pos.ToString());
                 }
             }
         }
@@ -100,7 +90,7 @@
                 if (EnemyFleet.BoatPositions.Contains(testedBoatPosition))
                 {
                     Console.WriteLine("Identified collision for position {0}", testedBoatPosition);
-                    throw new Exception("Collision en " + testedBoatPosition);
+                    throw new ErrorException("Collision en " + testedBoatPosition);
                 }
             }
         }
@@ -128,7 +118,7 @@
         {
             if (coordinates.Column < 'A' || coordinates.Column > 'J' || coordinates.Row < 1 || coordinates.Row > 10)
             {
-                throw new Exception("Impossible d'attaquer en " + coordinates.ToString());
+                throw new ErrorException("Impossible d'attaquer en " + coordinates.ToString());
             }
         }
         
@@ -136,18 +126,8 @@
         {
             if (SentAttackPositions.Contains(coordinates))
             {
-                throw new Exception("Déjà attaqué en " + coordinates.ToString());
+                throw new ErrorException("Déjà attaqué en " + coordinates.ToString());
             }
-        }
-
-        public void DisplayAttackPositions()
-        {
-            Console.Write("Attack positions : ");
-            foreach (Position pos in SentAttackPositions)
-            {
-                Console.Write(pos + " ");
-            }
-            Console.WriteLine();
         }
 
         public void setFleet(Fleet fl)
@@ -159,17 +139,28 @@
             }
         }
 
-        public void DisplayFleets()
-        {
-            MyFleet.Display();
-            EnemyFleet.Display();
-        }
-
         public void DisplayGrids()
         {
             Console.Clear();
             MyGrid.Display();
             EnemyGrid.Display();
+        }
+
+        public void DisplayGame()
+        {
+            Console.Clear();
+            Console.WriteLine("         My map           |         Oppenent map    ");
+            Console.WriteLine("   A B C D E F G H I J    |   A B C D E F G H I J   ");
+            Console.WriteLine("1  {0}  | 1  {1}  ", MyGrid.getRowDisplay(0), EnemyGrid.getHiddenRowDisplay(0));
+            Console.WriteLine("2  {0}  | 2  {1}  ", MyGrid.getRowDisplay(1), EnemyGrid.getHiddenRowDisplay(1));
+            Console.WriteLine("3  {0}  | 3  {1}  ", MyGrid.getRowDisplay(2), EnemyGrid.getHiddenRowDisplay(2));
+            Console.WriteLine("4  {0}  | 4  {1}  ", MyGrid.getRowDisplay(3), EnemyGrid.getHiddenRowDisplay(3));
+            Console.WriteLine("5  {0}  | 5  {1}  ", MyGrid.getRowDisplay(4), EnemyGrid.getHiddenRowDisplay(4));
+            Console.WriteLine("6  {0}  | 6  {1}  ", MyGrid.getRowDisplay(5), EnemyGrid.getHiddenRowDisplay(5));
+            Console.WriteLine("7  {0}  | 7  {1}  ", MyGrid.getRowDisplay(6), EnemyGrid.getHiddenRowDisplay(6));
+            Console.WriteLine("8  {0}  | 8  {1}  ", MyGrid.getRowDisplay(7), EnemyGrid.getHiddenRowDisplay(7));
+            Console.WriteLine("9  {0}  | 9  {1}  ", MyGrid.getRowDisplay(8), EnemyGrid.getHiddenRowDisplay(8));
+            Console.WriteLine("10 {0}  | 10 {1}  ", MyGrid.getRowDisplay(9), EnemyGrid.getHiddenRowDisplay(9));
         }
     }
 }

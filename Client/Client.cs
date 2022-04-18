@@ -14,14 +14,7 @@ namespace Networking
         NavalMessage Response = new();
         Engine Engine = new();
 
-        public Client()
-        {
-            Engine.AddBoat("Un", "U", new string[] { "F6", "F7", "F8" });
-            Engine.AddBoat("Deux", "D", new string[] { "G6", "G7", "G8" });
-            /*Engine.AddBoat("Trois", "T", new string[] { "H6", "H7", "H8" });
-            Engine.AddBoat("Quatre", "Q", new string[] { "I6", "I7", "I8" });
-            Engine.AddBoat("Cinq", "C", new string[] { "J6", "J7", "J8" });*/
-        }
+        public Client(){}
 
         public void Connect(string ip = "192.168.1.128")
         {
@@ -34,6 +27,39 @@ namespace Networking
             sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             sender.Connect(remoteEP);
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+        }
+
+        public void setupFleet()
+        {
+            setupBoat(2);
+            /*setupBoat(2);
+            setupBoat(3);
+            setupBoat(3);
+            setupBoat(4);*/
+        }
+
+        public void setupBoat(int length, string? error = null)
+        {
+            string[] tmp;
+            string[] positions;
+
+            Engine.DisplayGame();
+            Console.WriteLine("Place your boat (length {0}) : {1}", length, error);
+            try
+            {
+                tmp = Console.ReadLine().Split(" ");
+                positions = tmp[1].Split(",");
+                if (positions.Length != length)
+                {
+                    throw new Exception("Boat size must be " + length);
+                }
+                Engine.AddBoat(tmp[0], "", positions);
+            }
+            catch (Exception e)
+            {
+                setupBoat(length, e.Message);
+            }
+
         }
 
         public int SendMessage(NavalMessage nm)
@@ -60,19 +86,19 @@ namespace Networking
             return true;
         }
 
-        public bool HandleResponse()
+        public int HandleResponse()
         {
-            int tmp;
+            int tmp = 0;
 
             switch (Response.Type)
             {
                 case 2:
                     Engine.setFleet(new Fleet(Response.Fleet));
-                    DisplayGrids();
+                    Engine.DisplayGame();
                     break;
                 case 3:
                     tmp = Engine.ReceiveAttack(Response.Position);
-                    DisplayGrids();
+                    Engine.DisplayGame();
                     switch (tmp)
                     {
                         case 0:
@@ -82,12 +108,11 @@ namespace Networking
                             Console.WriteLine("Your opponent attacked in {0} and you were hit !", Response.Position);
                             break;
                         case 2:
-                            throw new Exception("Your opponent attacked in "+ Response.Position + " and you list !");
-                            break;
+                            throw new Exception("Your opponent attacked in "+ Response.Position + " and you lost !");
                     }
                     break;
             }
-            return true;
+            return tmp;
         }
 
         private string Trim(string str)
@@ -103,11 +128,6 @@ namespace Networking
             sender.Close();
         }
 
-        public void DisplayGrids()
-        {
-            Engine.DisplayGrids();
-        }
-
         public void SendFleet()
         {
             SendMessage(NavalMessage.CreateFromFleet(Engine.MyFleet));
@@ -120,21 +140,29 @@ namespace Networking
             int tmp;
 
             Console.WriteLine("Send attack :");
-            pos = Position.createFromString(Console.ReadLine());
-            SendMessage(NavalMessage.CreateFromAttack(pos));
-            tmp = Engine.Attack(pos);
-            DisplayGrids();
-            switch (tmp)
+            try
             {
-                case 0:
-                    Console.WriteLine("You attacked {0} and missed !", pos);
-                    break;
-                case 1:
-                    Console.WriteLine("You attacked {0} hit !", pos);
-                    break;
-                case 2:
-                    throw new Exception("You attacked " + pos + " and won !");
-                    break;
+                pos = Position.createFromString(Console.ReadLine());
+                tmp = Engine.Attack(pos);
+                SendMessage(NavalMessage.CreateFromAttack(pos));
+                Engine.DisplayGame();
+                switch (tmp)
+                {
+                    case 0:
+                        Console.WriteLine("You attacked {0} and missed !", pos);
+                        break;
+                    case 1:
+                        Console.WriteLine("You attacked {0} hit !", pos);
+                        break;
+                    case 2:
+                        throw new Exception("You attacked " + pos + " and won !");
+                        break;
+                }
+            }
+            catch (ErrorException e)
+            {
+                Console.WriteLine("Invalid attack : {0}", e.Message);
+                Attack();
             }
         }
     }
