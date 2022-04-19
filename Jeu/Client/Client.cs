@@ -4,37 +4,70 @@ using System.Text;
 using System.Text.Json;
 using Jeu;
 
-namespace Network
+namespace Jeu.Networking
 {
-    public class Server
+    public class Client
     {
-        // Incoming data from the client.  
-        public static string data = null;
-        IPEndPoint localEndPoint;
-        Socket listener;
-        Socket? handler;
-        Engine Engine = new();
+        // Data buffer for incoming data.  
+        byte[] bytes = new byte[4096];
+        Socket? sender;
         NavalMessage Response = new();
+        Engine Engine = new();
 
-        public Server()
+        public Client(){}
+
+        public static void StartClient()
         {
-            // Establish the local endpoint for the socket. Dns.GetHostName returns the name of the host running the application.  
-            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (IPAddress tmp in ipHostInfo.AddressList)
+            Client client = new();
+            bool connected = false;
+
+            while (connected == false)
             {
-                Console.WriteLine(tmp.MapToIPv4().ToString());
+                try
+                {
+                    Console.WriteLine("Enter the Server IP Address:");
+                    client.Connect(Console.ReadLine());
+                    connected = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            IPAddress ipAddress = ipHostInfo.AddressList[3];
 
-            localEndPoint = new IPEndPoint(ipAddress, 17000);
+            try
+            {
+                client.setupFleet();
+                //Ask to build Fleet here
+                client.SendFleet();
+                client.WaitResponse();
+                client.HandleResponse();
+                client.Attack();
 
-            // Create a TCP/IP socket.  
-            listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            // Bind the socket to the local endpoint and
-            // listen for incoming connections.  
-            listener.Bind(localEndPoint);
-            listener.Listen(10);
-            Console.WriteLine("Server initialized, ipAddress: {0}", ipAddress.MapToIPv4());
+                while (client.WaitResponse())
+                {
+                    client.HandleResponse();
+                    client.Attack();
+                }
+                //client.End();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void Connect(string ip = "192.168.1.128")
+        {
+            ip = ip == "" ? "127.0.0.1" : ip;
+            // Establish the remote endpoint for the socket. This example uses port 11000 on the local computer.  
+            IPAddress ipAddress = IPAddress.Parse(ip);
+            IPEndPoint remoteEP = new IPEndPoint(ipAddress, 17000);
+
+            // Create a TCP/IP  socket
+            sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            sender.Connect(remoteEP);
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
         }
 
         public void setupFleet()
@@ -59,7 +92,7 @@ namespace Network
                 positions = tmp[1].Split(",");
                 if (positions.Length != length)
                 {
-                    throw new Exception("Boat size must be "+length);
+                    throw new Exception("Boat size must be " + length);
                 }
                 Engine.AddBoat(tmp[0], "", positions);
             }
@@ -70,26 +103,28 @@ namespace Network
 
         }
 
-        public void WaitConnection()
+        public int SendMessage(NavalMessage nm)
         {
-            Console.WriteLine("Waiting for a connection...");
-            // Program is suspended while waiting for an incoming connection.  
-            handler = listener.Accept();
-            Console.WriteLine("New Client connection !");
-
+            // Encode the data string into a byte array.
+            string jsonString = JsonSerializer.Serialize(nm);
+            //Console.WriteLine("Sending\n{0}", jsonString + "<EOF>");
+            byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
+            // Send the data through the socket.  
+            return sender.Send(msg);
         }
+
         public bool WaitResponse()
         {
-            byte[] bytes = new Byte[4069];
             string res;
-
-            Console.WriteLine("Waiting for Client message...");
-            int bytesRec = handler.Receive(bytes);
+            int bytesRec;
+            
+            Console.WriteLine("Waiting for Server response...");
+            // Receive the response from the remote device.  
+            bytesRec = sender.Receive(bytes);
             res = Trim(Encoding.ASCII.GetString(bytes, 0, bytesRec));
-            //Console.WriteLine("Received Client message: {0}", res);
+            //Console.WriteLine("Received Server response: {0}", res);
             Response = JsonSerializer.Deserialize<NavalMessage>(res) ?? NavalMessage.CreateFromError();
             return true;
-
         }
 
         public int HandleResponse()
@@ -114,31 +149,24 @@ namespace Network
                             Console.WriteLine("Your opponent attacked in {0} and you were hit !", Response.Position);
                             break;
                         case 2:
-                            throw new Exception("Your opponent attacked in " + Response.Position + " and you lost !");
+                            throw new Exception("Your opponent attacked in "+ Response.Position + " and you lost !");
                     }
                     break;
             }
             return tmp;
         }
 
-        public int SendMessage(NavalMessage nm)
-        {
-            // Encode the data string into a byte array.  
-            string jsonString = JsonSerializer.Serialize(nm);
-            byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
-            // Send the data through the socket.  
-            return handler.Send(msg);
-        }
-
         private string Trim(string str)
         {
-            return str.Remove(str.IndexOf("<EOF>"));
+            return str.Remove(str.IndexOf("<EOF"));
         }
 
         public void End()
         {
-            //handler.Shutdown(SocketShutdown.Both);
-            handler.Close();
+            // Release the socket.  
+            //sender.Shutdown(SocketShutdown.Both);
+            sender.Send(Encoding.ASCII.GetBytes("EXIT<EOF>"));
+            sender.Close();
         }
 
         public void SendFleet()
@@ -172,12 +200,11 @@ namespace Network
                         break;
                 }
             }
-            catch (Exception e)
+            catch (ErrorException e)
             {
                 Console.WriteLine("Invalid attack : {0}", e.Message);
                 Attack();
             }
         }
-
     }
 }

@@ -4,14 +4,22 @@ using static System.Console;
 namespace Jeu
 {
     public class Grid
-    {
+    {   /// <summary>
+    /// Méthode qui contient les données de la grille dans un dictionnaire sous forme paire key/value
+    /// </summary>
         Dictionary<char, int> Case = new Dictionary<char, int>()
         {
             {'A',0}, {'B',1}, {'C',2},{'D',3},{'E',4},{'F',5},{'G',6},{'H',7},{'I',8},{'J',9},
         };
 
+        /// <summary>
+        /// Méthode pour afficher la grille 
+        /// </summary>
         int[,] G = new int[10, 10] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
+        /// <summary>
+        /// Méthode pour qualifier les impacts qui vont apparaitre dans la grille
+        /// </summary>
         enum CaseType
         {
             Vide = 0,
@@ -52,6 +60,11 @@ namespace Jeu
             }
         }
 
+        /// <summary>
+        /// Méthode qui retourne les lignes de la grille
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public string getRowDisplay(int row)
         {
             string str = "";
@@ -64,6 +77,11 @@ namespace Jeu
             return str;
         }
 
+        /// <summary>
+        /// Méthode qui cache les "0" dans la grille 
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public string getHiddenRowDisplay(int row)
         {
             string str = "";
@@ -77,7 +95,7 @@ namespace Jeu
         }
 
         /// <summary>
-        /// Méthode qui affiche la flotte à côté de la grille
+        /// Méthode qui affiche la flotte
         /// </summary>
         /// <param name="firstLineGrid">correspond à la première ligne de la grille</param>
         public void DisplayFleet(int firstLineGrid)
@@ -90,6 +108,10 @@ namespace Jeu
             //WriteLine("Place ta flotte sur la grille pour commencer.");
             //SetCursorPosition(0 + decalage, firstLineGrid + 1); //replace le curseur avec le décalage 
         }
+        /// <summary>
+        /// Méthode qui ajoute les bateaux
+        /// </summary>
+        /// <param name="b"></param>
         public void AddBoat(Boat b)
         {
             foreach (KeyValuePair<Position, bool> pair in b.Positions)
@@ -98,6 +120,10 @@ namespace Jeu
                 G[ComputerPos[0], ComputerPos[1]] = 2;
             }
         }
+        /// <summary>
+        /// Méthode qui ajoute les impacts
+        /// </summary>
+        /// <param name="p"></param>
         public void AddImpact(Position p)
         {
             //WriteLine("Il y a eu un impact : {0} {1}", p.Column, p.Row);
@@ -108,6 +134,11 @@ namespace Jeu
             //Console.WriteLine("Il y a eu un impact : {0} {1}", ComputerPos[0], ComputerPos[1]);
 
         }
+        /// <summary>
+        /// Méthode qui ajoute les résultats  
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         public string AddResult(int param)
         {
             switch (param)
@@ -130,7 +161,12 @@ namespace Jeu
             return " ";
 
         }
-
+        /// <summary>
+        /// Méthode qui retourne un tableau de coordonnées 
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int[] GetComputerCoordinate(char column, int row)  // ex : col = D, row = 7
         {
             int[] res = new int[2];

@@ -9,6 +9,9 @@
         public Grid EnemyGrid = new();
         public List<Position> SentAttackPositions = new();
 
+        /// <summary>
+        /// Constructeur par défaut de la classe Engine
+        /// </summary>
         public Engine() {}
         /// La fonction AddBoat ajoute le bateau en procédent de la façon suivante :
         /// Elle vérifie avec CheckcoordinatesInMap si les coordonnées sont possibles (contre exemple : A12 ; Z3).

@@ -38,7 +38,10 @@ namespace Jeu
                 }
             }
         }
-
+        /// <summary>
+        /// Ajoute les boats à la flotte UserFleet
+        /// </summary>
+        /// <param name="fl"></param>
         public Fleet(SerialFleet fl)
         {
             UserFleet = new();
@@ -48,7 +51,12 @@ namespace Jeu
             }
             BoatPositions = fl.BoatPositions;
         }
-
+        /// <summary>
+        /// Ne reourne rien, lit le nom, type et coordonnées d'un Boat, l'ajoute à la flotte et met à jour le tableau de positions
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="coordinates"></param>
         public void AddBoat(string name, string type, Position[] coordinates)
         {
             try
@@ -65,7 +73,11 @@ namespace Jeu
                 WriteLine("Erreur lors de la création du bateau : {0}", e.Message);
             }
         }
-
+        /// <summary>
+        /// Retourne le boat si la position lise correspond à un boat de la flotte. Retourne Null sinon
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns>Boat</returns>
         public Boat? Attack(Position coordinates)
         {
             int tmp;
@@ -79,7 +91,10 @@ namespace Jeu
             }
             return null;
         }
-
+        /// <summary>
+        /// Retourne le nombre des Boats encore en vie
+        /// </summary>
+        /// <returns></returns>
         public int CountAliveBoats()
         {
             int res = 0;
@@ -89,7 +104,9 @@ namespace Jeu
             }
             return res;
         }
-
+        /// <summary>
+        /// Affiche toutes les positions des boats
+        /// </summary>
         public void DisplayBoatPositions()
         {
             Write("Boat positions : ");
@@ -99,7 +116,9 @@ namespace Jeu
             }
             WriteLine();
         }
-
+        /// <summary>
+        /// Affiche les positions et status (en vie ou pas) de tous les Boats
+        /// </summary>
         public void Display()
         {
             foreach (Boat b in UserFleet)
