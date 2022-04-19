@@ -72,11 +72,11 @@ namespace Jeu.Networking
 
         public void setupFleet()
         {
-            setupBoat(2);
-            /*setupBoat(2);
-            setupBoat(3);
-            setupBoat(3);
-            setupBoat(4);*/
+            List<int> boatSize = new List<int>() { 2, 2, 3, 3, 4 };
+            foreach (int bs in boatSize)
+            {
+                setupBoat(bs);
+            }
         }
 
         public void setupBoat(int length, string? error = null)
