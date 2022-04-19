@@ -4,10 +4,38 @@ using System.Text;
 using System.Text.Json;
 using Jeu;
 
-namespace Network
+namespace Jeu.Network
 {
     public class Server
     {
+        public static void StartServer()
+        {
+            Server server = new();
+            int gameState = 0;
+
+            while (true)
+            {
+                try
+                {
+                    server.WaitConnection();
+                    server.setupFleet();
+                    //Waiting for a player
+                    server.WaitResponse();
+                    server.HandleResponse();
+                    server.SendFleet();
+                    while (server.WaitResponse() && gameState != 2)
+                    {
+                        server.HandleResponse();
+                        server.Attack();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
         // Incoming data from the client.  
         public static string data = null;
         IPEndPoint localEndPoint;
