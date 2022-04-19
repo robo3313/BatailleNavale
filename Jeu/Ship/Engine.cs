@@ -9,8 +9,18 @@
         public Grid EnemyGrid = new();
         public List<Position> SentAttackPositions = new();
 
+        /// <summary>
+        /// Constructeur par défaut de la classe Engine
+        /// </summary>
         public Engine() {}
 
+        /// <summary>
+        /// Permet d'ajouter un Bateau dans la flotte du joueur
+        /// </summary>
+        /// <param type="string" name="name">Le nom du bateau</param>
+        /// <param name="type">Le type de bateau (pas utilisé pour l'instant)</param>
+        /// <param name="newCoordinates">Les coordonées du bateau</param>
+        /// <exception cref="ErrorException">En cas de coordonnées incorrectes</exception>
         public void AddBoat(string name, string type, string[] newCoordinates)
         {
             Position[] coordinates = Position.createFromStringArray(newCoordinates);
@@ -21,6 +31,11 @@
             MyGrid.AddBoat(new Boat(name, type, coordinates));
         }
 
+        /// <summary>
+        /// Vérifie si l'attaque aux coordonées de la Position touche un bateau de notre flotte
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns>2 Si toute la flotte est coulée, 1 si un bateau est touché, 0 si l'attaque a échoué</returns>
         public int ReceiveAttack(Position coordinates)
         {
             try
@@ -48,6 +63,11 @@
             return 0;
         }
 
+        /// <summary>
+        /// Vérifie si l'attaque aux coordonées Position touche un bateau de la flotte adverse
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns>2 si tous les bateaux adverses sont coulés, 1 si un bateau a été touché, 0 si aucun bateau n'a été touché</returns>
         public int Attack(Position coordinates)
         {
             CheckAttackInMap(coordinates);
@@ -71,6 +91,11 @@
             return 0;
         }
 
+        /// <summary>
+        /// Vérifie que les coordonées sont bien comprises dans la carte
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <exception cref="ErrorException"></exception>
         public void CheckcoordinatesInMap(Position[] coordinates)
         {
             foreach (Position pos in coordinates)
@@ -82,7 +107,11 @@
             }
         }
 
-        //Penser a modifier Fleet1
+        /// <summary>
+        /// Vérifie qu'il n'y a pas déjà un bateau sur les coordonées
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <exception cref="ErrorException"></exception>
         public void CheckBoatCollisions(Position[] coordinates)
         {
             foreach (Position testedBoatPosition in coordinates)
@@ -95,6 +124,11 @@
             }
         }
 
+        /// <summary>
+        /// Vérifie que les coordonées se suivent et peuvent bien représenter un bateau
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <exception cref="Exception"></exception>
         public void CheckBoatContinuity(Position[] coordinates)
         {
             Position? previousCoor = null;
@@ -114,6 +148,11 @@
 
         }
 
+        /// <summary>
+        /// Vérifie que les coordonnées de l'attaque sont bien dans la carte
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <exception cref="ErrorException"></exception>
         public void CheckAttackInMap(Position coordinates)
         {
             if (coordinates.Column < 'A' || coordinates.Column > 'J' || coordinates.Row < 1 || coordinates.Row > 10)
@@ -122,6 +161,11 @@
             }
         }
         
+        /// <summary>
+        /// Vérifie que les coordonées n'ont pas déjà été attaquées
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <exception cref="ErrorException"></exception>
         public void CheckAlreadyAttacked(Position coordinates)
         {
             if (SentAttackPositions.Contains(coordinates))
@@ -130,6 +174,10 @@
             }
         }
 
+        /// <summary>
+        /// Permet de set la propriétée EnemyFleet et de l'initialiser correctement
+        /// </summary>
+        /// <param name="fl"></param>
         public void setFleet(Fleet fl)
         {
             EnemyFleet = fl;
@@ -139,6 +187,9 @@
             }
         }
 
+        /// <summary>
+        /// Affichage simple des cartes des adversaires
+        /// </summary>
         public void DisplayGrids()
         {
             Console.Clear();
@@ -146,6 +197,9 @@
             EnemyGrid.Display();
         }
 
+        /// <summary>
+        /// Affiche les des cartes des adversaires
+        /// </summary>
         public void DisplayGame()
         {
             Console.Clear();
