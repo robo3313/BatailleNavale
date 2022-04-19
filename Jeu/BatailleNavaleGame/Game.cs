@@ -197,7 +197,7 @@ namespace Jeu.BatailleNavaleGame
 
                 SetCursorPosition(0, cursorBefore[0]);
 
-                engine.DisplayGrid();
+                //engine.DisplayGrid();
                 Read();
             }
         }
