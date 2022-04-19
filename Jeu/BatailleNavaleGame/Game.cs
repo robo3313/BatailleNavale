@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jeu.Menus;
+using Jeu.Network;
+using Jeu.Networking;
 using static System.Console;
 
 namespace Jeu.BatailleNavaleGame
@@ -13,7 +15,8 @@ namespace Jeu.BatailleNavaleGame
     /// </summary>
     public class Game
     {
-        internal Engine engine = new();          
+        internal Engine engine = new();
+       
         /// <summary>
         /// méthode de démarrage du jeu Bataille Navale
         /// </summary>
@@ -68,6 +71,8 @@ namespace Jeu.BatailleNavaleGame
         private void DisplayAboutInfo()
         {
             Clear();
+            WriteLine(Constants._LOGO, ForegroundColor = ConsoleColor.Green);
+            ResetColor();
             WriteLine("Ce jeu a été créé par la team La Manu.");
             WriteLine("C'est un jeu très amusant. Ce n'est que la première version !");
             WriteLine("Des nouveautés sont à venir...\n");
@@ -91,11 +96,13 @@ namespace Jeu.BatailleNavaleGame
             switch (selectedIndex)
             {
                 case 0:
-                    DisplayGridAndFleet(grid, selectedIndex);
-                    SelectBoatCoordinates();
+                    Server.StartServer();
+                    //DisplayGridAndFleet(grid, selectedIndex);
+                    //SelectBoatCoordinates();
                     break;
                 case 1:
-                    DisplayGridAndFleet(grid, selectedIndex);
+                    Client.StartClient();
+                    //DisplayGridAndFleet(grid, selectedIndex);
                     break;
             }            
             ExitGame();
