@@ -13,14 +13,11 @@
         /// Constructeur par défaut de la classe Engine
         /// </summary>
         public Engine() {}
-
-        /// <summary>
-        /// Permet d'ajouter un Bateau dans la flotte du joueur
-        /// </summary>
-        /// <param type="string" name="name">Le nom du bateau</param>
-        /// <param name="type">Le type de bateau (pas utilisé pour l'instant)</param>
-        /// <param name="newCoordinates">Les coordonées du bateau</param>
-        /// <exception cref="ErrorException">En cas de coordonnées incorrectes</exception>
+        /// La fonction AddBoat ajoute le bateau en procédent de la façon suivante :
+        /// Elle vérifie avec CheckcoordinatesInMap si les coordonnées sont possibles (contre exemple : A12 ; Z3).
+        /// Elle vérifie ensuite à l'aide de CheckBoatCollisions que les bateaux ne se superposent pas.
+        /// CheckBoatContinuity s'assure que le bateau est droit (exemple : E6, E7, E8).
+        /// Enfin, une fois ces trois vérifications faites, elle crée le bateau et l'ajoute à la flotte "MyFleet" et l'insère par la suite sur la grille du joueur.
         public void AddBoat(string name, string type, string[] newCoordinates)
         {
             Position[] coordinates = Position.createFromStringArray(newCoordinates);
@@ -30,14 +27,10 @@
             MyFleet.AddBoat(name, type, coordinates);
             MyGrid.AddBoat(new Boat(name, type, coordinates));
         }
-
-        /// <summary>
-        /// Vérifie si l'attaque aux coordonées de la Position touche un bateau de notre flotte
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <returns>2 Si toute la flotte est coulée, 1 si un bateau est touché, 0 si l'attaque a échoué</returns>
+        /// ReceiveAttack s'occupe, si aucune erreur n'est détectée en son sein, d'enregistrer l'attaque sur la Grille et de vérifier si un bateau est présent sur la case attaquée.
         public int ReceiveAttack(Position coordinates)
         {
+            /// Ici, on tente d'ajouter l'impact à la grille "MyGrid".
             try
             {
                 MyGrid.AddImpact(coordinates);
@@ -56,18 +49,16 @@
                     return 1;
                 }
             }
+            /// La coordonnée rentrée n'est pas dans la grille et/ou est identique à une précédente attaque provenant du même joueur.
             catch (Exception e)
             {
                 Console.WriteLine("Erreur lors de l'attaque : {0}", e.Message);
             }
             return 0;
         }
-
-        /// <summary>
-        /// Vérifie si l'attaque aux coordonées Position touche un bateau de la flotte adverse
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <returns>2 si tous les bateaux adverses sont coulés, 1 si un bateau a été touché, 0 si aucun bateau n'a été touché</returns>
+        /// Attack se charge de vérifier la possibilité de l'attaque en prenant en compte les coordonnées.
+        /// CheckAttackInMap et CheckAlreadyAttacked analysent l'attaque proposée et la grille actuelle du joueur visé (donc grille 1 de la cible / grille 2 de l'attaquant).
+        /// Une fois ces deux fonctions exécutées sans erreur, l'attaque est ajoutée à la Grille 2 du Joueur attaquant.
         public int Attack(Position coordinates)
         {
             CheckAttackInMap(coordinates);
@@ -90,12 +81,7 @@
             }
             return 0;
         }
-
-        /// <summary>
-        /// Vérifie que les coordonées sont bien comprises dans la carte
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <exception cref="ErrorException"></exception>
+        /// CheckcoordinatesInMap vérifie les coordonnées entrée lors de la création d'un bateau et renvoie un message d'erreur si le bateau ne peut-être placé aux coordonnées données par le joueur.
         public void CheckcoordinatesInMap(Position[] coordinates)
         {
             foreach (Position pos in coordinates)
@@ -107,11 +93,8 @@
             }
         }
 
-        /// <summary>
-        /// Vérifie qu'il n'y a pas déjà un bateau sur les coordonées
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <exception cref="ErrorException"></exception>
+        //Penser a modifier Fleet1
+        /// CheckBoatCollisions vérifie si deux bateaux se superposent.
         public void CheckBoatCollisions(Position[] coordinates)
         {
             foreach (Position testedBoatPosition in coordinates)
@@ -123,12 +106,7 @@
                 }
             }
         }
-
-        /// <summary>
-        /// Vérifie que les coordonées se suivent et peuvent bien représenter un bateau
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <exception cref="Exception"></exception>
+        /// CheckBoatContinuity empêche la création d'un bateau qui ne serait ni horizontal ni vertical.
         public void CheckBoatContinuity(Position[] coordinates)
         {
             Position? previousCoor = null;
@@ -147,12 +125,7 @@
             }
 
         }
-
-        /// <summary>
-        /// Vérifie que les coordonnées de l'attaque sont bien dans la carte
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <exception cref="ErrorException"></exception>
+        /// CheckAttackInMap empêche l'attaque d'un joueur s'il choisit une case en dehors de la grille.
         public void CheckAttackInMap(Position coordinates)
         {
             if (coordinates.Column < 'A' || coordinates.Column > 'J' || coordinates.Row < 1 || coordinates.Row > 10)
@@ -160,12 +133,7 @@
                 throw new ErrorException("Impossible d'attaquer en " + coordinates.ToString());
             }
         }
-        
-        /// <summary>
-        /// Vérifie que les coordonées n'ont pas déjà été attaquées
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <exception cref="ErrorException"></exception>
+        /// CheckAlreadyAttacked s'emploie lors d'une nouvelle attaque d'un joueur et permet de dire au joueur s'il a déjà attaqué dans cette même coordonnée au-part-avant.
         public void CheckAlreadyAttacked(Position coordinates)
         {
             if (SentAttackPositions.Contains(coordinates))
@@ -173,11 +141,7 @@
                 throw new ErrorException("Déjà attaqué en " + coordinates.ToString());
             }
         }
-
-        /// <summary>
-        /// Permet de set la propriétée EnemyFleet et de l'initialiser correctement
-        /// </summary>
-        /// <param name="fl"></param>
+        /// setFleet crée une Flotte dans la grille d'attaque adverse (grille 2) plaçant les bateaux de l'adversaire sur cette grille afin de faire corroborer les attaques du joueur avec les placements de l'adversaire.
         public void setFleet(Fleet fl)
         {
             EnemyFleet = fl;
@@ -186,20 +150,14 @@
                 EnemyGrid.AddBoat(b);
             }
         }
-
-        /// <summary>
-        /// Affichage simple des cartes des adversaires
-        /// </summary>
+        /// DisplayGrids affiche les grilles.
         public void DisplayGrids()
         {
             Console.Clear();
             MyGrid.Display();
             EnemyGrid.Display();
         }
-
-        /// <summary>
-        /// Affiche les des cartes des adversaires
-        /// </summary>
+        /// Display Game affiche les deux grilles d'un joueur et cache les bateaux adverses dans la grille 2 (grille permettant au joueur d'attaquer).
         public void DisplayGame()
         {
             Console.Clear();
