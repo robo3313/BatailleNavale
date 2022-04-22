@@ -8,25 +8,25 @@ namespace Jeu.Network
 {
     public class Server
     {
-        public static void StartServer()
-        {
-            Server server = new();
-            int gameState = 0;
+        int gameState = 0;
 
+        public void Start()
+        {
+            Launch();
             while (true)
             {
                 try
                 {
-                    server.WaitConnection();
-                    server.setupFleet();
+                    WaitConnection();
+                    setupFleet();
                     //Waiting for a player
-                    server.WaitResponse();
-                    server.HandleResponse();
-                    server.SendFleet();
-                    while (server.WaitResponse() && gameState != 2)
+                    WaitResponse();
+                    HandleResponse();
+                    SendFleet();
+                    while (WaitResponse() && gameState != 2)
                     {
-                        server.HandleResponse();
-                        server.Attack();
+                        HandleResponse();
+                        Attack();
                     }
                 }
                 catch (Exception e)
@@ -46,13 +46,17 @@ namespace Jeu.Network
 
         public Server()
         {
+        }
+
+        public void Launch()
+        {
             // Establish the local endpoint for the socket. Dns.GetHostName returns the name of the host running the application.  
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             foreach (IPAddress tmp in ipHostInfo.AddressList)
             {
                 Console.WriteLine(tmp.MapToIPv4().ToString());
             }
-            IPAddress ipAddress = ipHostInfo.AddressList[3];
+            IPAddress ipAddress = ipHostInfo.AddressList[1];
 
             localEndPoint = new IPEndPoint(ipAddress, 17000);
 

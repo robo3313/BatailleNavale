@@ -13,20 +13,18 @@ namespace Jeu.Networking
         Socket? sender;
         NavalMessage Response = new();
         Engine Engine = new();
+        bool connected = false;
 
         public Client(){}
 
-        public static void StartClient()
+        public void Start()
         {
-            Client client = new();
-            bool connected = false;
-
             while (connected == false)
             {
                 try
                 {
                     Console.WriteLine("Enter the Server IP Address:");
-                    client.Connect(Console.ReadLine());
+                    Connect(Console.ReadLine());
                     connected = true;
                 }
                 catch (Exception e)
@@ -37,17 +35,17 @@ namespace Jeu.Networking
 
             try
             {
-                client.setupFleet();
+                setupFleet();
                 //Ask to build Fleet here
-                client.SendFleet();
-                client.WaitResponse();
-                client.HandleResponse();
-                client.Attack();
+                SendFleet();
+                WaitResponse();
+                HandleResponse();
+                Attack();
 
-                while (client.WaitResponse())
+                while (WaitResponse())
                 {
-                    client.HandleResponse();
-                    client.Attack();
+                    HandleResponse();
+                    Attack();
                 }
                 //client.End();
             }

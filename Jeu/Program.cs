@@ -43,31 +43,6 @@ namespace Jeu
         {
             Game myGame = new();
             myGame.Start();
-
-            /*
-            Fleet fleet1 = new Fleet();
-            fleet1.AddBoat("Willy", "Orque", new string[] { "A1", "A2", "A3" });
-
-            fleet1.AddBoat("Willy", "Orque", new string[] { "D5", "D6", "D7" });
-
-            fleet1.AddBoat("Willy", "Orque", new string[] { "B9", "B10", "B11" });
-            */
-
-            /*Fleet f = new();
-            Boat b = new("toto", "navire", new string[] { "G5", "G6", "G7"});
-            b.WriteInfo();
-
-
-
-            Grid g = new();
-            g.AddBoat(b);
-            g.Display();
-            g.AddImpact(i);*/
-            /*Fleet f = new();
-            Boat b1 = new("Gary", "Galleon");
-            Boat b2 = new("William", "Warship");
-            b1.WriteInfo();
-            */
         }
     }
 }

@@ -15,8 +15,9 @@ namespace Jeu.BatailleNavaleGame
     /// </summary>
     public class Game
     {
-        internal Engine engine = new();
-       
+        Server server = new();
+        Client client = new();
+
         /// <summary>
         /// méthode de démarrage du jeu Bataille Navale
         /// </summary>
@@ -96,12 +97,12 @@ namespace Jeu.BatailleNavaleGame
             switch (selectedIndex)
             {
                 case 0:
-                    Server.StartServer();
+                    server.Start();
                     //DisplayGridAndFleet(grid, selectedIndex);
                     //SelectBoatCoordinates();
                     break;
                 case 1:
-                    Client.StartClient();
+                    client.Start();
                     //DisplayGridAndFleet(grid, selectedIndex);
                     break;
             }            
@@ -190,8 +191,6 @@ namespace Jeu.BatailleNavaleGame
                 string boatType = menuBoat.Options[menuBoat.SelectedIndex];
 
                 //WriteLine($"Tu vas positionner le bateau {strBoatName} de type {boatType} dans les cases {strCoordinates}");
-
-                engine.AddBoat(strBoatName!, boatType, arrayBoatCoordinates);   //ajoute un bateau
 
                 //derniere position
                 List<int> cursorposition = GetCursorPosition(); //récupère la position après traitement
